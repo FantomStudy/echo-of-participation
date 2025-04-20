@@ -1,0 +1,151 @@
+/* Table Styles */
+.tableContainer {
+  height: 80vh;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: auto;
+  font-size: 16px;
+  position: relative;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background-color: #fff;
+  position: sticky;
+  top: -1px;
+  z-index: 10;
+}
+
+.table tfoot {
+  background-color: #fff;
+  position: sticky;
+  bottom: -1px;
+  z-index: 10;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 110px;
+  max-width: 110px;
+  min-width: 110px;
+}
+
+.table th {
+  font-weight: 400;
+  outline: none;
+  font-size: 16px;
+  position: relative;
+  border-top: 1px solid #f4f4f4;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.table td {
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+}
+
+.table tbody td:first-child,
+.table thead th:first-child {
+  min-width: 250px;
+  max-width: 300px;
+  padding-left: 15px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.attendanceInput {
+  width: 30px;
+  text-align: center;
+  background-color: transparent;
+}
+.table input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.table td:focus-within {
+  border: 1.5px solid #3c8cfc;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9fbfc;
+}
+
+.table tbody tr:nth-child(even) input {
+  background-color: #f9fbfc;
+}
+
+.highlightedHeader {
+  background-color: #fcb8b8 !important;
+}
+
+/* Filter Section */
+.filter_wrapper {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px #f4f4f4;
+}
+
+.name_section {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.name_section p {
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.block p {
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #828282;
+  padding: 10px 15px;
+  background-color: #f1f2f6;
+  border-radius: 10px;
+}
+
+.filter_btn {
+  cursor: pointer;
+  background-color: #5c81ff;
+  color: #fff;
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.filter_btn:hover {
+  background-color: #4e75f8;
+}

@@ -1,0 +1,16 @@
+import { useLocation } from "react-router-dom";
+import Header from "@components/Header/Header";
+
+export default function Layout({ children }) {
+  const location = useLocation();
+
+  const hideHeaderPaths = ["/login", "/no-access"];
+  const shouldShowHeader = !hideHeaderPaths.includes(location.pathname);
+
+  return (
+    <>
+      {shouldShowHeader && <Header />}
+      {children}
+    </>
+  );
+}

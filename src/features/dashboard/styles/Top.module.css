@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+  height: 100%;
+}
+.title {
+  color: #0069ff;
+}
+.list {
+  padding-left: 20px;
+}
+.bold {
+  font-weight: 500;
+}

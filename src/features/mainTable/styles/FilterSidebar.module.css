@@ -1,0 +1,205 @@
+.filterSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+  background-color: #ffffff;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filterOption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radioInput {
+  margin: 0;
+  accent-color: #007bff;
+}
+
+.subOptions {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.subRadioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.subRadioInput {
+  margin: 0;
+  accent-color: #007bff;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.textInput {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.textInput:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.applyButton {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.applyButton:hover {
+  background-color: #0056b3;
+}
+
+.applyButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.resetButton:hover {
+  background-color: #c82333;
+}
+
+.resetButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: red;
+}
+
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.suggestionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.suggestionItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}
+
+.timeRangeGroup {
+  margin-top: 15px;
+}
+
+.timeRangeLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.timeRangeSelect {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.timeRangeSelect:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.customRangeInput {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.customRangeInput:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
