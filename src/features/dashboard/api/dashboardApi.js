@@ -3,7 +3,7 @@ import api from "@configs/axiosConfig";
 //TODO ВРЕМЕННО ЗАМЕНЕНО НА ПОДСЧЁТ НА ФРОНТЕ
 export const fetchTotalEventPoints = async () => {};
 
-export const fetchTableDataApi = async ({ pageParam = 1, limit = 400 }) => {
+export const fetchTableData = async ({ pageParam = 1, limit = 400 }) => {
   const response = await api.get(
     `/event-journal/allStudents?page=${pageParam}&limit=${limit}`
   );
@@ -37,6 +37,18 @@ export const fetchTableDataApi = async ({ pageParam = 1, limit = 400 }) => {
   return { eventList, studentList, attendanceData };
 };
 
+export const saveAttendance = async (dataToSave) => {
+  try {
+    const response = await api.post("/event-journal/save-journal", [
+      dataToSave,
+    ]);
+
+    return response;
+  } catch (err) {
+    console.error(`Ошибка при сохранении данных`, err);
+  }
+};
+
 export const fetchTopOrganizers = async () => {
   const response = await api.get("/top/teacherRating");
 
@@ -57,16 +69,4 @@ export const fetchTopStudents = async (filter = "allGroupes") => {
 
   const data = response.data;
   return data.slice(0, 10);
-};
-
-export const saveAttendance = async (dataToSave) => {
-  try {
-    const response = await api.post("/event-journal/save-journal", [
-      dataToSave,
-    ]);
-
-    return response;
-  } catch (err) {
-    console.error(`Ошибка при сохранении данных`, err);
-  }
 };

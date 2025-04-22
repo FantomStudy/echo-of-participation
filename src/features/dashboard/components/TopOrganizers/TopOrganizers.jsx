@@ -1,9 +1,9 @@
-import { useOrganizers } from "@/shared/hooks/business/queries/useOrganizers";
+import { useOrganizersTop } from "../../hooks/queries/useOrganizersTop";
+import { formatName } from "@/shared/utils/formatUtils";
 import styles from "../../styles/Top.module.css";
-import { formatName } from "@utils/formatDataUtils";
 
 export default function TopOrganizers() {
-  const { organizers, error, isLoading } = useOrganizers();
+  const { organizers, error, isLoading } = useOrganizersTop();
 
   //TODO СДЕЛАЙ СКЕЛЕТОН КОМПОНЕНТ
   if (isLoading) {

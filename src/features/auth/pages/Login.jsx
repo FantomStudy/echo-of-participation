@@ -1,6 +1,6 @@
 import { useActionState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUserApi } from "@features/auth/api/authApi";
+import { loginUser } from "@features/auth/api/authApi";
 import { queryClient } from "@configs/queryClientConfig";
 import SubmitButton from "../components/SubmitButton";
 import styles from "../styles/LoginPage.module.css";
@@ -17,10 +17,10 @@ export default function Login() {
     const login = formData.get("login");
     const password = formData.get("password");
 
-    const response = await loginUserApi({ login, password });
+    const response = await loginUser({ login, password });
 
     if (response.accessToken) {
-      await queryClient.refetchQueries({ queryKey: ["user"] });
+      await queryClient.refetchQueries({ queryKey: ["currentUser"] });
       navigate("/", { replace: true });
     }
 

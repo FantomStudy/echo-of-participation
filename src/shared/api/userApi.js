@@ -1,7 +1,7 @@
 import api from "@configs/axiosConfig";
 import { getCookie } from "@utils/cookieUtils";
 
-export const fetchUserApi = async () => {
+export const fetchUser = async () => {
   const accessToken = getCookie("access_token");
   if (!accessToken) {
     throw new Error("Токен отсутствует");

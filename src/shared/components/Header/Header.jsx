@@ -2,14 +2,14 @@ import { memo, useRef } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { queryClient } from "@configs/queryClientConfig";
-import { formatName } from "@utils/formatDataUtils";
+import { formatName } from "@/shared/utils/formatUtils";
 import { useShowUI } from "@hooks/ui/useShowUI";
 import styles from "./Header.module.css";
-import { useLogout } from "@/shared/stores/localStore";
+import { useLogout } from "@stores/localStore";
 
 const Header = () => {
   const logout = useLogout();
-  const userData = queryClient.getQueryData(["user"]);
+  const userData = queryClient.getQueryData(["currentUser"]);
   const { isShow, toggleShow } = useShowUI();
   const buttonRef = useRef(null);
 

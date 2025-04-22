@@ -1,0 +1,364 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.profileContainer {
+  position: relative;
+}
+
+.profileContainer h1 {
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 100%;
+  color: #5c81ff;
+}
+
+.admins_tables {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.info_wrapper {
+  border: solid 2px #f4f4f4;
+  width: 315px;
+  height: fit-content;
+  border-radius: 15px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.info_wrapper h2 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.tralalero {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.blockInfo h3 {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.blockInfo p {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.event_table {
+  border: solid 2px #f4f4f4;
+  width: 1000px;
+  border-radius: 15px;
+  padding: 15px 20px;
+}
+
+.create_event {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px #f4f4f4;
+  padding: 0 0 10px;
+  margin-bottom: 15px;
+}
+
+.create_event h2 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.addEventForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.eventInput {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add_event_btn {
+  cursor: pointer;
+  background-color: #5c81ff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+.add_event_btn:hover {
+  background-color: #4e75f8;
+}
+
+.eventsList {
+  list-style: none;
+  padding: 0;
+}
+
+.eventItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  font-size: 146x;
+}
+
+.eventItem:last-child {
+  border-bottom: none;
+}
+
+.deleteButton {
+  padding: 4px 8px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+}
+
+.loading {
+  text-align: center;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.error {
+  text-align: center;
+  padding: 15px;
+  font-size: 16px;
+  color: #ff0000;
+}
+
+.actionsSection {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+}
+
+.addUserLink:hover {
+  background-color: #45a049;
+}
+
+.logoutButton {
+  padding: 8px 16px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.logoutButton:hover {
+  background-color: #cc0000;
+}
+
+/* MODAL CONTENT STYLES */
+.modal_content_wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 30px;
+}
+.modal_input,
+.date_picker,
+.modal_select {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px 15px;
+  background-color: #f1f2f6;
+}
+.date_picker_wrapper {
+  width: 100%;
+}
+.modal_select {
+  padding-right: 40px; /* Отступ справа для иконки стрелки */
+  appearance: none; /* Убираем стандартную стрелку в select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("/sellectArrow.png");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.modal_input:focus,
+.date_picker:focus {
+  outline: #0069ff 1px solid;
+}
+
+.modal_title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 150%;
+  text-align: center;
+  color: #0069ff;
+}
+
+/* Планшеты (768px–1024px) */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .profileContainer h1 {
+    font-size: 20px;
+  }
+
+  .admins_tables {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info_wrapper,
+  .event_table {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .addEventForm {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .eventInput,
+  .datePicker {
+    width: 100%;
+  }
+
+  .add_event_btn {
+    width: 100%;
+  }
+
+  .actionsSection {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .addUserLink,
+  .logoutButton {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Телефоны (до 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 8px;
+  }
+
+  .info_wrapper h2,
+  .create_event h2 {
+    font-size: 18px;
+  }
+
+  .info_wrapper,
+  .event_table {
+    padding: 10px;
+  }
+
+  .addEventForm {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .eventInput,
+  .datePicker {
+    width: 100%;
+  }
+
+  .add_event_btn {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .eventItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .deleteButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .actionsSection {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .addUserLink,
+  .logoutButton {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+/* Очень маленькие экраны (до 480px) */
+@media (max-width: 480px) {
+  .profileContainer h1 {
+    font-size: 18px;
+  }
+
+  .info_wrapper h2,
+  .create_event h2 {
+    font-size: 16px;
+  }
+
+  .blockInfo h3,
+  .blockInfo p,
+  .eventItem,
+  .eventInput,
+  .datePicker,
+  .add_event_btn,
+  .deleteButton,
+  .addUserLink,
+  .logoutButton {
+    font-size: 12px;
+  }
+
+  .backButton {
+    width: 25px;
+    height: 25px;
+  }
+
+  .backButton svg {
+    width: 14px;
+    height: 14px;
+  }
+}

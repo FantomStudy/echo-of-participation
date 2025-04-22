@@ -3,7 +3,10 @@ import styles from "./Modal.module.css";
 
 const Modal = ({ children, show, toggleClick }) => {
   if (!show) {
+    document.body.style.overflow = "auto";
     return null;
+  } else {
+    document.body.style.overflow = "hidden";
   }
 
   return createPortal(

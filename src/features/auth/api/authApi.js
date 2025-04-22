@@ -1,7 +1,7 @@
 import { getCookie } from "@utils/cookieUtils";
 import api from "@configs/axiosConfig";
 
-export const loginUserApi = async ({ login, password }) => {
+export const loginUser = async ({ login, password }) => {
   try {
     const response = await api.post(
       "/auth/login",

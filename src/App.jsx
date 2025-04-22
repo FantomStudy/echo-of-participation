@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useUserData } from "@/shared/hooks/business/queries/useUserData";
+import { useCurrentUser } from "@hooks/business/queries/useCurrentUser";
 import { routes } from "@configs/routesConfig";
 import Layout from "@components/Layout/Layout";
 import Loader from "@components/Loader/Loader";
 import "./App.css";
 
 export default function App() {
-  const { isLoading, error } = useUserData();
+  const { isLoading, error } = useCurrentUser();
 
   if (isLoading) {
     return <Loader />;
   }
 
   if (error) {
-    return <div>ERROR...</div>;
+    return <div>ERROR FETCH USER</div>;
   }
 
   return (

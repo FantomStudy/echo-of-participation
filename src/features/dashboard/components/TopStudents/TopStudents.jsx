@@ -1,8 +1,8 @@
-import { useStudents } from "@/shared/hooks/business/queries/useStudents";
+import { useStudentsTop } from "../../hooks/queries/useStudentsTop";
 import styles from "../../styles/Top.module.css";
 
 export default function TopStudents() {
-  const { data, isLoading, error } = useStudents();
+  const { entities, isLoading, error } = useStudentsTop();
 
   //TODO СДЕЛАЙ СКЕЛЕТОН КОМПОНЕНТ
   if (isLoading) {
@@ -16,8 +16,8 @@ export default function TopStudents() {
     <div className={styles.container}>
       <h2 className={styles.title}>Список лучших групп</h2>
       <ol className={styles.list}>
-        {data.length > 0 ? (
-          data.map((item, index) => (
+        {entities.length > 0 ? (
+          entities.map((item, index) => (
             <li key={`top-entity-${index}`}>
               <span className={styles.bold}>{item.groupName}</span> -{" "}
               {item.totalScore} баллов

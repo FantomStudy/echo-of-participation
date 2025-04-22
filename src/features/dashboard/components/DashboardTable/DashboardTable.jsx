@@ -1,16 +1,17 @@
 import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useDashboardTable } from "@hooks/business/queries/useDashboardTable";
-import { useSaveAttendance } from "@hooks/business/mutations/useSaveAttendance";
-import { formatName } from "@utils/formatDataUtils";
-import CustomTooltip from "../CustomTooltip/CustomTooltip";
-import { useEditTable } from "../../hooks/useEditTable";
+import { useSaveAttendance } from "../../hooks/mutations/useSaveAttendance";
+import { useDashboardTable } from "../../hooks/queries/useDashboardTable";
 import { getEventStats } from "../../utils/calculateUtils";
+import { useEditTable } from "../../hooks/useEditTable";
 import { exportExcel } from "../../utils/exportUtils";
+import { formatName } from "@utils/formatUtils";
+import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import styles from "../../styles/DashboardTable.module.css";
+import FilterSidebar from "../FilterSidebar/FilterSidebar";
 
 export default function DashboardTable({ filterType }) {
-  const { mutate, isMutating } = useSaveAttendance();
+  const { save, isSaving } = useSaveAttendance();
   const { events, students, attendance, isLoading, error } =
     useDashboardTable();
 
@@ -21,7 +22,7 @@ export default function DashboardTable({ filterType }) {
     cellClick,
     cellInputChange,
     handleInputBlurOrEnter,
-  } = useEditTable({ attendance, events, mutate });
+  } = useEditTable({ attendance, events, mutateFn: save });
 
   const tableContainer = useRef(null);
 
@@ -145,7 +146,7 @@ export default function DashboardTable({ filterType }) {
                             handleInputBlurOrEnter(e, student.id, event.key)
                           }
                           autoFocus
-                          disabled={isMutating}
+                          disabled={isSaving}
                           className={styles.attendanceInput}
                         />
                       ) : (

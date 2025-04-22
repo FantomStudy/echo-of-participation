@@ -3,7 +3,7 @@ import { queryClient } from "@configs/queryClientConfig";
 import { useCheckAuth } from "@shared/stores/localStore";
 
 const ProtectedRoute = ({ children, requiredRole = null }) => {
-  const userData = queryClient.getQueryData(["user"]);
+  const userData = queryClient.getQueryData(["currentUser"]);
   const roleName = userData?.roleName;
   const checkAuth = useCheckAuth();
 

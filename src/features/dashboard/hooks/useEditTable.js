@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 
-export const useEditTable = ({ attendance, events, mutate }) => {
+export const useEditTable = ({ attendance, events, mutateFn }) => {
   const [localAttendance, setLocalAttendance] = useState(attendance || {});
   const [currentCell, setCurrentCell] = useState(null);
   const [cellValue, setCellValue] = useState("");
@@ -47,10 +47,10 @@ export const useEditTable = ({ attendance, events, mutate }) => {
         }),
       };
 
-      mutate(dataToSave);
+      mutateFn(dataToSave);
       setCurrentCell(null);
     },
-    [localAttendance, events, mutate]
+    [localAttendance, events, mutateFn]
   );
 
   //TODO ВОЗМОЖНО УЛУЧШИТЬ ИЛИ ПОМЕНЯТЬ ВВОД
