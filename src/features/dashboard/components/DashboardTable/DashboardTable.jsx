@@ -11,6 +11,7 @@ import styles from "../../styles/DashboardTable.module.css";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
 
 export default function DashboardTable({ filterType }) {
+  const { isShow, toggleShow } = useShowUI();
   const { save, isSaving } = useSaveAttendance();
   const { events, students, attendance, isLoading, error } =
     useDashboardTable();

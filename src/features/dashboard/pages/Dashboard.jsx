@@ -1,3 +1,4 @@
+import Sidebar from "@/shared/components/Sidebar/Sidebar.jsx";
 import DashboardTable from "../components/DashboardTable/DashboardTable.jsx";
 import TopOrganizers from "../components/TopOrganizers/TopOrganizers.jsx";
 import TopStudents from "../components/TopStudents/TopStudents.jsx";

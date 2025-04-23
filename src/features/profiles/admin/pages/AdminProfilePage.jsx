@@ -124,7 +124,7 @@ export default function AdminProfilePage() {
               </button>
             </div>
 
-            <Modal show={isShow} toggleClick={toggleShow}>
+            <Modal isShow={isShow} toggleClick={toggleShow}>
               <form
                 className={styles.modal_content_wrapper}
                 onSubmit={handleAddEvent}

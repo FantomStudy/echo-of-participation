@@ -1,8 +1,8 @@
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 
-const Modal = ({ children, show, toggleClick }) => {
-  if (!show) {
+const Modal = ({ children, isShow, toggleClick }) => {
+  if (!isShow) {
     document.body.style.overflow = "auto";
     return null;
   } else {
@@ -10,7 +10,7 @@ const Modal = ({ children, show, toggleClick }) => {
   }
 
   return createPortal(
-    <div className={styles.wrapper}>
+    <div className={styles.modal_wrapper}>
       <div className={styles.modal}>
         <button className={styles.close_button} onClick={toggleClick}>
           <img src="/Close button.png" alt="CloseBtn" />
