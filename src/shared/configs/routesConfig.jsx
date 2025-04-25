@@ -1,10 +1,11 @@
 import Login from "@features/auth/pages/Login";
-import NoAccessPage from "@features/noAccess/pages/NoAccessPage";
+import NotFoundPage from "@/features/noAccess/pages/NotFoundPage";
 import AddUserPage from "@features/profiles/admin/pages/AddUserPage";
 import AdminProfilePage from "@features/profiles/admin/pages/AdminProfilePage";
 import StudentProfilePage from "@features/profiles/student/pages/StudentProfilePage";
 import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import Dashboard from "@features/dashboard/pages/Dashboard";
+import { Navigate } from "react-router-dom";
 
 export const routes = [
   {
@@ -20,8 +21,12 @@ export const routes = [
     element: <Login />,
   },
   {
-    path: "/no-access",
-    element: <NoAccessPage />,
+    path: "/not-found",
+    element: <NotFoundPage />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/not-found" replace />,
   },
   {
     path: "/student/profile/:studentId",

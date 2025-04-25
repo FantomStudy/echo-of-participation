@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children, requiredRole = null }) => {
   }
 
   if (requiredRole && roleName !== requiredRole) {
-    return <Navigate to="/no-access" replace state={{ from: location }} />;
+    return <Navigate to="/not-found" replace state={{ from: location }} />;
   }
 
   return children;
