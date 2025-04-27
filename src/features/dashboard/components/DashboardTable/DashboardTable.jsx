@@ -106,6 +106,9 @@ export default function DashboardTable({ filterType }) {
             <tbody>
               {vItems.map((vItem) => {
                 const student = students[vItem.index];
+            <tbody>
+              {vItems.map((vItem) => {
+                const student = students[vItem.index];
 
                 return (
                   <tr
@@ -171,7 +174,84 @@ export default function DashboardTable({ filterType }) {
                 );
               })}
             </tbody>
+                return (
+                  <tr
+                    key={vItem.key}
+                    style={{
+                      height: `${vItem.size}px`,
+                      transform: `translateY(${vItem.start}px)`,
+                      position: "absolute",
+                      width: "100%",
+                    }}
+                  >
+                    <td
+                      key={`student-name-${student.id}`}
+                      //   onClick={() => handleStudentClick(student.id)}
+                      className={`${styles.studentNameCell} ${
+                        filterType === "students" ? styles.clickable : ""
+                      }`}
+                    >
+                      {formatName(student.name)}
+                    </td>
+                    {events.map((event) => (
+                      <td
+                        key={`attendance-${student.id}-${event.key}`}
+                        onClick={() =>
+                          cellClick(
+                            student.id,
+                            event.key,
+                            localAttendance[student.id][event.key]
+                          )
+                        }
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        className={
+                          event.name.includes("Промежуточная аттестация")
+                            ? styles.highlightedCell
+                            : ""
+                        }
+                      >
+                        {currentCell?.studentId === student.id &&
+                        currentCell?.eventKey === event.key ? (
+                          <input
+                            name="editable_cell"
+                            type="text"
+                            value={cellValue}
+                            onChange={cellInputChange}
+                            onBlur={(e) =>
+                              handleInputBlurOrEnter(e, student.id, event.key)
+                            }
+                            onKeyDown={(e) =>
+                              handleInputBlurOrEnter(e, student.id, event.key)
+                            }
+                            autoFocus
+                            disabled={isSaving}
+                            className={styles.attendanceInput}
+                          />
+                        ) : (
+                          localAttendance[student.id][event.key]
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
 
+            <tfoot>
+              <tr>
+                <th>Итого</th>
+                {events.map((event) => (
+                  <th key={`event-footer-${event.key}`}>
+                    {getEventStats(event.key, localAttendance)}
+                  </th>
+                ))}
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      )}
             <tfoot>
               <tr>
                 <th>Итого</th>
