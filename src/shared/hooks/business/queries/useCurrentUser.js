@@ -14,7 +14,7 @@ export const useCurrentUser = () => {
   return {
     user: data,
     roleName: data?.roleName,
-    isLoading: isLoading,
-    error: error,
+    isLoading,
+    error,
   };
 };

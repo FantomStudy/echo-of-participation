@@ -1,10 +1,11 @@
 import axios from "axios";
 import { getCookie } from "@utils/cookieUtils";
 
+const apiURl = import.meta.env.VITE_API_URL;
 const noAuthEndpoints = [];
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: apiURl,
   headers: {
     "Content-Type": "application/json",
   },

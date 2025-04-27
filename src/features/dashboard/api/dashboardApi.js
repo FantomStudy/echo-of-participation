@@ -70,3 +70,23 @@ export const fetchTopStudents = async (filter = "allGroupes") => {
   const data = response.data;
   return data.slice(0, 10);
 };
+
+export const fetchDepartments = async () => {
+  const response = await api.get("/department/all");
+
+  if (response.statusText !== "OK") {
+    throw Error("Ошибка при загрузке отделений");
+  }
+
+  return response.data;
+};
+
+export const fetchGroups = async () => {
+  const response = await api.get("/groupe/allф");
+
+  if (response.statusText !== "OK") {
+    throw Error("Ошибка при загрузке групп");
+  }
+
+  return response.data;
+};

@@ -34,7 +34,7 @@ export const routes = [
   {
     path: "/admin",
     element: (
-      <ProtectedRoute requiredRole="admin">
+      <ProtectedRoute requiredRole="Администратор">
         <AdminProfilePage />
       </ProtectedRoute>
     ),
@@ -42,7 +42,7 @@ export const routes = [
   {
     path: "/admin/add-user",
     element: (
-      <ProtectedRoute requiredRole="admin">
+      <ProtectedRoute requiredRole="Администратор">
         <AddUserPage />
       </ProtectedRoute>
     ),

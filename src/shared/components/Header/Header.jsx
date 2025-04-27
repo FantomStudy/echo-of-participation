@@ -2,10 +2,10 @@ import { memo, useRef } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { queryClient } from "@configs/queryClientConfig";
-import { formatName } from "@/shared/utils/formatUtils";
+import { formatName } from "@utils/formatUtils";
 import { useShowUI } from "@hooks/ui/useShowUI";
-import styles from "./Header.module.css";
 import { useLogout } from "@stores/localStore";
+import styles from "./Header.module.css";
 
 const Header = () => {
   const logout = useLogout();
@@ -61,9 +61,9 @@ const Header = () => {
               <Dropdown
                 buttonRef={buttonRef}
                 isShow={isShow}
-                toggleShow={toggleShow}
+                toggleClick={toggleShow}
               >
-                {userData?.roleName === "admin" && (
+                {userData?.roleName === "Администратор" && (
                   <li>
                     <Link to="/admin">Панель администратора</Link>
                   </li>
