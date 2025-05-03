@@ -25,6 +25,9 @@ export default [
         alias: {
           map: [
             ["@", "./src"],
+            ["@features", "./src/features"],
+            ["@auth", "./src/features/auth"],
+            ["@dashboard", "./src/features/dashboard"],
             ["@shared", "./src/shared"],
             ["@api", "./src/shared/api"],
             ["@hooks", "./src/shared/hooks"],
@@ -32,7 +35,6 @@ export default [
             ["@stores", "./src/shared/stores"],
             ["@configs", "./src/shared/configs"],
             ["@components", "./src/shared/components"],
-            ["@features", "./src/features"],
           ],
           extensions: [".js", ".jsx"],
         },

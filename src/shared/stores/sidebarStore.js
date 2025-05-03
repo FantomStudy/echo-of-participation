@@ -1,104 +1,108 @@
 import { useCallback } from "react";
 import { create } from "zustand";
-
-const initialFilterData = {
-  filterType: null,
-  inputValue: "",
-  sort: "all",
-  startDate: null,
-  endDate: null,
-};
-
-const initialBurgerData = {
-  menuItems: [{ id: "", label: "", href: "" }],
-};
+import { shallow } from "zustand/shallow";
 
 const initialDataMap = {
-  filters: initialFilterData,
-  burger: initialBurgerData,
+  filters: { filterType: null, id: null, sort: "all", customRange: null },
+  burger: { menuItems: [] },
 };
 
-// Стор для управления всеми сайдбарами
+const getInitialSidebarState = (id, initialData = {}) => {
+  const defaultData = initialDataMap[id] || {};
+  return {
+    isShow: false,
+    data: { ...defaultData, ...initialData },
+  };
+};
+
 export const useSidebarStore = create((set, get) => ({
   sidebars: {},
 
-  initializeSidebar: (id) => {
-    if (get().sidebars[id]) return;
+  getSidebar: (id) => {
+    const state = get();
+    if (!state.sidebars[id]) {
+      set((state) => ({
+        sidebars: {
+          ...state.sidebars,
+          [id]: getInitialSidebarState(id),
+        },
+      }));
+    }
+    return get().sidebars[id];
+  },
 
-    const initialData = initialDataMap[id] || {};
-
+  toggleShow: (id) =>
     set((state) => ({
       sidebars: {
         ...state.sidebars,
         [id]: {
-          isShow: false,
-          data: initialData,
-
-          toggleShow: () =>
-            set((state) => ({
-              sidebars: {
-                ...state.sidebars,
-                [id]: {
-                  ...state.sidebars[id],
-                  isShow: !state.sidebars[id].isShow,
-                },
-              },
-            })),
-
-          setIsShow: (value) =>
-            set((state) => ({
-              sidebars: {
-                ...state.sidebars,
-                [id]: { ...state.sidebars[id], isShow: value },
-              },
-            })),
-
-          setData: (data) =>
-            set((state) => ({
-              sidebars: {
-                ...state.sidebars,
-                [id]: {
-                  ...state.sidebars[id],
-                  data: { ...state.sidebars[id].data, ...data },
-                },
-              },
-            })),
-
-          resetData: () =>
-            set((state) => ({
-              sidebars: {
-                ...state.sidebars,
-                [id]: { ...state.sidebars[id], data: initialData },
-              },
-            })),
+          ...(state.sidebars[id] || getInitialSidebarState(id)),
+          isShow: !(state.sidebars[id] || getInitialSidebarState(id)).isShow,
         },
       },
-    }));
-  },
+    })),
 
-  getSidebar: (id) => {
-    let sidebar = get().sidebars[id];
-    if (!sidebar) {
-      get().initializeSidebar(id);
-      sidebar = get().sidebars[id];
-    }
+  setIsShow: (id, value) =>
+    set((state) => ({
+      sidebars: {
+        ...state.sidebars,
+        [id]: {
+          ...(state.sidebars[id] || getInitialSidebarState(id)),
+          isShow: value,
+        },
+      },
+    })),
 
-    return sidebar;
-  },
+  setData: (id, data) =>
+    set((state) => ({
+      sidebars: {
+        ...state.sidebars,
+        [id]: {
+          ...(state.sidebars[id] || getInitialSidebarState(id)),
+          data: {
+            ...(state.sidebars[id] || getInitialSidebarState(id)).data,
+            ...data,
+          },
+        },
+      },
+    })),
+
+  resetData: (id) =>
+    set((state) => ({
+      sidebars: {
+        ...state.sidebars,
+        [id]: {
+          ...(state.sidebars[id] || getInitialSidebarState(id)),
+          data: initialDataMap[id] || {},
+        },
+      },
+    })),
 }));
 
-// Хук для управления конкретным сайдбаром
 export const useSidebar = (id) => {
-  const getSidebar = useSidebarStore((state) => state.getSidebar);
-  const sidebar = getSidebar(id);
+  const sidebar = useSidebarStore((state) => state.getSidebar(id), shallow);
 
-  return {
-    isShow: sidebar.isShow,
-    data: sidebar.data,
-    toggle: useCallback(() => sidebar.toggleShow(), [sidebar]),
-    open: useCallback(() => sidebar.setIsShow(true), [sidebar]),
-    close: useCallback(() => sidebar.setIsShow(false), [sidebar]),
-    setData: useCallback((data) => sidebar.setData(data), [sidebar]),
-    resetData: useCallback(() => sidebar.resetData(), [sidebar]),
-  };
+  const { isShow, data } = sidebar;
+  const toggle = useCallback(
+    () => useSidebarStore.getState().toggleShow(id),
+    [id]
+  );
+  const open = useCallback(
+    () => useSidebarStore.getState().setIsShow(id, true),
+    [id]
+  );
+  const close = useCallback(
+    () => useSidebarStore.getState().setIsShow(id, false),
+    [id]
+  );
+  const setData = useCallback(
+    (data) => useSidebarStore.getState().setData(id, data),
+    [id]
+  );
+  const resetData = useCallback(
+    () => useSidebarStore.getState().resetData(id),
+    [id]
+  );
+
+  return { isShow, data, toggle, open, close, setData, resetData };
 };

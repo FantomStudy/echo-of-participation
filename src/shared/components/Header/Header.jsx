@@ -1,17 +1,13 @@
-import { memo, useRef } from "react";
 import { Link } from "react-router-dom";
-import Dropdown from "@components/Dropdown/Dropdown";
 import { queryClient } from "@configs/queryClientConfig";
+import Dropdown from "@components/Dropdown/Dropdown";
+import { removeCookie } from "@utils/cookieUtils";
 import { formatName } from "@utils/formatUtils";
-import { useShowUI } from "@hooks/ui/useShowUI";
-import { useLogout } from "@stores/localStore";
+import { useSetAuth } from "@stores/authStore";
 import styles from "./Header.module.css";
 
 const Header = () => {
-  const logout = useLogout();
   const userData = queryClient.getQueryData(["currentUser"]);
-  const { isShow, toggleShow } = useShowUI();
-  const buttonRef = useRef(null);
 
   return (
     <header className={styles.header}>
@@ -27,52 +23,32 @@ const Header = () => {
                 <Link to="/">Основная таблица</Link>
               </li>
               <li>
-                <span onClick={() => {}} style={{ cursor: "pointer" }}>
-                  Оценка мероприятия
-                </span>
+                <Link to="/">Оценка мероприятия</Link>
               </li>
             </ul>
           </div>
           <div className={styles.user_section}>
             <img src="/bell.svg" alt="bell" className={styles.bell} />
-            <div
-              className={styles.user_info_wrapper}
-              ref={buttonRef}
-              onClick={toggleShow}
-            >
-              <div className={styles.user_info}>
-                {userData ? (
-                  <>
-                    <h2>{formatName(userData.fullName)}</h2>
-                    <p>{userData.roleName}</p>
-                  </>
-                ) : (
-                  <>
-                    <span className={styles.skeleton_fullname}></span>
-                    <span className={styles.skeleton_role}></span>
-                  </>
-                )}
+
+            <Dropdown menuItems={<DropdownItems />}>
+              <div className={styles.user_info_wrapper}>
+                <div className={styles.user_info}>
+                  {userData ? (
+                    <>
+                      <h2>{formatName(userData.fullName)}</h2>
+                      <p>{userData.roleName}</p>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <img
+                  src="/user_logo.svg"
+                  alt="user_logo"
+                  className={styles.user_logo}
+                />
               </div>
-              <img
-                src="/user_logo.svg"
-                alt="user_logo"
-                className={styles.user_logo}
-              />
-              <Dropdown
-                buttonRef={buttonRef}
-                isShow={isShow}
-                toggleClick={toggleShow}
-              >
-                {userData?.roleName === "Администратор" && (
-                  <li>
-                    <Link to="/admin">Панель администратора</Link>
-                  </li>
-                )}
-                <li onClick={logout} className={styles.logout}>
-                  Выйти
-                </li>
-              </Dropdown>
-            </div>
+            </Dropdown>
           </div>
         </div>
       </div>
@@ -80,4 +56,28 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default Header;
+
+function DropdownItems() {
+  const userData = queryClient.getQueryData(["currentUser"]);
+  const setAuth = useSetAuth();
+
+  const handleLogout = () => {
+    removeCookie("access_token");
+    setAuth(false);
+    queryClient.removeQueries({ queryKey: ["currentUser"] });
+  };
+
+  return (
+    <>
+      {userData?.roleName === "Администратор" && (
+        <li>
+          <Link to="/admin">Панель администратора</Link>
+        </li>
+      )}
+      <li onClick={handleLogout} className={styles.logout}>
+        Выйти
+      </li>
+    </>
+  );
+}

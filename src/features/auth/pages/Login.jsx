@@ -1,30 +1,23 @@
 import { useActionState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "@features/auth/api/authApi";
-import { queryClient } from "@configs/queryClientConfig";
-import SubmitButton from "../components/SubmitButton";
-import styles from "../styles/LoginPage.module.css";
+import { useLoginUser } from "@auth/hooks/mutations/useLoginUser";
+import styles from "@auth/styles/LoginPage.module.css";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const { login, isPending } = useLoginUser();
 
   const [state, submitAction] = useActionState(handleLogin, {
     data: null,
     error: null,
   });
-
   async function handleLogin(prevState, formData) {
-    const login = formData.get("login");
-    const password = formData.get("password");
+    const credentials = {
+      login: formData.get("login"),
+      password: formData.get("password"),
+    };
 
-    const response = await loginUser({ login, password });
+    login(credentials);
 
-    if (response.accessToken) {
-      await queryClient.refetchQueries({ queryKey: ["currentUser"] });
-      navigate("/", { replace: true });
-    }
-
-    return { ...prevState, ...response };
+    return { ...prevState };
   }
 
   return (
@@ -46,7 +39,9 @@ export default function Login() {
             className={styles.input}
             required
           />
-          <SubmitButton />
+          <button className={styles.button} type="submit" disabled={isPending}>
+            {isPending ? "Вход..." : "Войти"}
+          </button>
         </form>
         {state.error && <p className={styles.error}>{state.error}</p>}
       </div>

@@ -1,13 +1,30 @@
-import styles from "./Dropdown.module.css";
+import { useRef } from "react";
 import { useClickOutside } from "@hooks/ui/useClickOutside";
+import { useShowUI } from "@hooks/ui/useShowUI";
+import styles from "./DropdownMenu.module.css";
 
-export default function Dropdown({
-  children,
-  isShow,
-  toggleClick,
-  buttonRef,
-}) {
-  useClickOutside(buttonRef, toggleClick, isShow);
+const Dropdown = ({ children, menuItems }) => {
+  const { isShow, setIsShow, toggleShow } = useShowUI();
+  const wrapperRef = useRef(null);
 
-  return isShow ? <ul className={styles.dropdown}>{children}</ul> : null;
-}
+  useClickOutside(
+    wrapperRef,
+    () => {
+      setIsShow(false);
+    },
+    isShow
+  );
+
+  return (
+    <div
+      ref={wrapperRef}
+      onClick={toggleShow}
+      className={styles.dropdown_wrapper}
+    >
+      {children}
+      {isShow ? <ul className={styles.dropdown}>{menuItems}</ul> : null}
+    </div>
+  );
+};
+
+export default Dropdown;

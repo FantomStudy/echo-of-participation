@@ -4,10 +4,17 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  //УБЕРИ ПОТОМ
+  server: {
+    host: "0.0.0.0",
+  },
   plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@features": path.resolve(__dirname, "./src/features"),
+      "@auth": path.resolve(__dirname, "./src/features/auth"),
+      "@dashboard": path.resolve(__dirname, "./src/features/dashboard"),
       "@shared": path.resolve(__dirname, "./src/shared"),
       "@api": path.resolve(__dirname, "./src/shared/api"),
       "@hooks": path.resolve(__dirname, "./src/shared/hooks"),
@@ -15,7 +22,6 @@ export default defineConfig({
       "@stores": path.resolve(__dirname, "./src/shared/stores"),
       "@configs": path.resolve(__dirname, "./src/shared/configs"),
       "@components": path.resolve(__dirname, "./src/shared/components"),
-      "@features": path.resolve(__dirname, "./src/features"),
     },
   },
 });

@@ -5,7 +5,7 @@
   height: 100%;
 }
 .title {
-  color: #0069ff;
+  color: var(--font-blue-color);
 }
 .list {
   padding-left: 20px;

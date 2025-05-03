@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../../styles/CustomTooltip.module.css";
+import styles from "@dashboard/styles/CustomTooltip.module.css";
 
 const CustomTooltip = ({ title, children }) => {
   const [isHovered, setIsHovered] = useState(false);

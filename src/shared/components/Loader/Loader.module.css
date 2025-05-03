@@ -4,15 +4,13 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  /* background-color: #f5f5f5; */
-  font-family: Jost, sans-serif;
 }
 
 .spinner {
   width: 50px;
   height: 50px;
   border: 5px solid #e0e7ff;
-  border-top: 5px solid #5c81ff;
+  border-top: 5px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -21,7 +19,7 @@
   margin-top: 15px;
   font-size: 18px;
   font-weight: 500;
-  color: #5c81ff;
+  color: var(--font-blue-color);
 }
 
 @keyframes spin {
@@ -33,7 +31,6 @@
   }
 }
 
-/* Планшеты (768px–1024px) */
 @media (max-width: 1024px) {
   .spinner {
     width: 40px;
@@ -46,7 +43,6 @@
   }
 }
 
-/* Телефоны (до 768px) */
 @media (max-width: 768px) {
   .spinner {
     width: 35px;
@@ -59,7 +55,6 @@
   }
 }
 
-/* Очень маленькие экраны (до 480px) */
 @media (max-width: 480px) {
   .spinner {
     width: 30px;

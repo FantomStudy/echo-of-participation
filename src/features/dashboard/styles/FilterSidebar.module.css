@@ -7,8 +7,8 @@
 .title {
   font-size: 20px;
   font-weight: 700;
-  color: #5c81ff;
   text-align: center;
+  color: var(--font-blue-color);
 }
 
 .select_group {
@@ -26,93 +26,120 @@
 
 .button {
   height: 40px;
-  color: white;
+  border: none;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
-}
-.button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.button.base {
-  background-color: #4a90e2;
-}
-.button.base:hover {
-  background-color: #3a80d2;
-}
-
-.button.danger {
-  background-color: #ff0000;
-}
-.button.danger:hover {
-  background-color: #e60000;
+  font-weight: 500;
+  transition: background-color 0.25s ease, color 0.25s ease, border 0.25s ease;
 }
 
 .button.outline {
-  color: #333;
   font-weight: normal;
+  color: #333;
   background-color: #fff;
-  border: 1px solid #5c81ff;
-  transition: 0.2s ease border-color;
-}
-.button.outline.active {
-  color: #fff;
-  background-color: #5c81ff;
-}
-.button.outline:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+  border: 1px solid var(--primary-color);
 }
 .button.outline:hover {
-  border-color: #0055a4;
+  border-color: var(--primary-hover-color);
+}
+
+.button.outline.active {
+  color: #fff;
+  background-color: var(--primary-color);
+}
+.button.outline.active:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.button.base {
+  color: #fff;
+  background-color: var(--primary-color);
+}
+.button.base:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.button.danger {
+  color: #fff;
+  background-color: var(--danger-color);
+}
+.button.danger:hover {
+  background-color: var(--danger-hover-color);
+}
+
+.button:disabled,
+.button:hover:disabled {
+  cursor: auto;
+  font-weight: normal;
+  border: none;
+  color: var(--font-secondary-color);
+  background-color: var(--disabled-color);
 }
 
 .select,
 .input {
   width: 100%;
   height: 40px;
-  border: 1px solid #4a90e2;
+  border: 1px solid var(--primary-color);
   border-radius: 8px;
   padding: 0 10px;
   box-sizing: border-box;
   font-size: 16px;
   color: #333;
-  transition: 0.2s ease border-color;
 }
-
 .select {
-  cursor: pointer;
   appearance: none;
+  cursor: pointer;
 }
-.select:focus {
-  border-color: #0055a4;
+.select:focus,
+.input:focus {
+  border-color: var(--primary-hover-color);
   outline: none;
 }
-.select:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+.select:disabled,
+.input:disabled {
+  cursor: auto;
+  border: none;
+  background-color: var(--disabled-color);
 }
-
 .input::placeholder {
   color: #333;
 }
-.input:focus {
-  border-color: #0055a4;
-  outline: none;
-}
-.input:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+.time_range {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
 }
 
 .error {
-  margin-top: 10px;
   font-size: 14px;
   color: red;
   text-align: center;
+}
+
+.combobox_wrapper {
+  position: relative;
+}
+.combobox_list {
+  cursor: grab;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 135px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  background-color: #fff;
+  border: 1px solid var(--light-border-color);
+  border-radius: 8px;
+}
+.combobox_item {
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: background-color 0.25s ease;
+}
+.combobox_item:hover,
+.combobox_item.focus {
+  background-color: var(--light-hover-color);
 }

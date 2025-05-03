@@ -1,11 +1,8 @@
-import { useStudentsTop } from "../../hooks/queries/useStudentsTop";
 import styles from "../../styles/Top.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export default function TopStudents() {
-  const { entities, isLoading, error } = useStudentsTop();
-
+export default function TopStudents({ entities, isLoading, error }) {
   if (error) {
     return <>Error</>;
   }

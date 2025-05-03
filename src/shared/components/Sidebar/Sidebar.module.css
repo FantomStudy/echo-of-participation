@@ -28,9 +28,9 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: 0.2s ease-in-out opacity;
   pointer-events: none;
+  transition: 0.2s ease-in-out opacity;
+  background-color: var(--blackout-color);
   will-change: opacity;
 }
 .sidebar.closed .sidebar_overlay {

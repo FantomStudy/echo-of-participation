@@ -1,17 +1,21 @@
-  import { useEffect } from "react";
+import { useEffect } from "react";
 
-  export const useClickOutside = (ref, callback, isActive) => {
-    useEffect(() => {
-      const handleClickOutside = (e) => {
-        if (isActive && ref.current && !ref.current.contains(e.target)) {
-          callback();
-        }
-      };
+export const useClickOutside = (ref, callback, isActive) => {
+  useEffect(() => {
+    if (!isActive) return;
 
-      document.addEventListener("mousedown", handleClickOutside);
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        callback();
+      }
+    };
 
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref, callback, isActive]);
-  };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("touchstart", handleClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("touchstart", handleClick);
+    };
+  }, [ref, callback, isActive]);
+};

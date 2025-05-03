@@ -1,11 +1,15 @@
 import axios from "axios";
 import { getCookie } from "@utils/cookieUtils";
 
-const apiURl = import.meta.env.VITE_API_URL;
-const noAuthEndpoints = [];
+const API_URL = import.meta.env.VITE_API_URL;
+const NO_AUTH_ENDPOINTS = [];
+
+if (!API_URL) {
+  throw new Error("BASE_URL не обьявлена в переменной окружения");
+}
 
 const api = axios.create({
-  baseURL: apiURl,
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -14,10 +18,10 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const accessToken = getCookie("access_token");
-    const isNoAuth = noAuthEndpoints.some((endpoint) =>
-      config.url.includes(endpoint)
+    const isNoAuth = NO_AUTH_ENDPOINTS.some((endpoint) =>
+      config.url?.includes(endpoint)
     );
-
+    
     if (accessToken && !isNoAuth) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

@@ -1,0 +1,24 @@
+:root {
+  --skeleton-base-color: #f6f6f6;
+  --skeleton-highlight-color: #e7e7e7;
+
+  --font-blue-color: #0069ff;
+  --font-secondary-color: #828282;
+
+  --primary-color: #5c81ff;
+  --primary-hover-color: #4a72f8;
+
+  --danger-color: #ff0000;
+  --danger-hover-color: #e60000;
+
+  --light-hover-color: #f1f2f6;
+  --light-border-color: #f4f4f4;
+
+  --disabled-color: #afafaf2f;
+
+  --table-alternate-color: #f9fbfc;
+
+  --blackout-color: rgba(0, 0, 0, 0.5);
+
+  --lite-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}

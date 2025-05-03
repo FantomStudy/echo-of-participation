@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCheckAuth } from "@stores/localStore";
-import { fetchTopOrganizers } from "../../api/dashboardApi";
+import { useCheckAuth } from "@stores/authStore";
+import { fetchOrganizersTop } from "@dashboard/api/ratingsApi";
 
 export const useOrganizersTop = () => {
-  const checkAuth = useCheckAuth();
+  const isAuth = useCheckAuth();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["topOrganizers"],
-    queryFn: fetchTopOrganizers,
-    enabled: checkAuth,
+    queryKey: ["organizersTop"],
+    queryFn: fetchOrganizersTop,
+    enabled: isAuth,
   });
 
-  return { organizers: data, isLoading, error };
+  return { data, isLoading, error };
 };

@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchDepartments } from "@dashboard/api/dashboardApi";
 import { useCheckAuth } from "@stores/authStore";
+import { fetchDiagramTop } from "@dashboard/api/ratingsApi";
 
-export const useDepartments = () => {
+export const useDiagramTop = () => {
   const isAuth = useCheckAuth();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["departments"],
-    queryFn: fetchDepartments,
+    queryKey: ["diagramTop"],
+    queryFn: () => fetchDiagramTop(),
     enabled: isAuth,
   });
 

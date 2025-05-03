@@ -1,16 +1,16 @@
 import { useCallback, useMemo, useState } from "react";
 
-export const useEditTable = ({ attendance, events, mutateFn }) => {
-  const [localAttendance, setLocalAttendance] = useState(attendance || {});
+export const useEditTable = ({ traffic, events, mutateFn }) => {
+  const [localTraffic, setLocalTraffic] = useState(traffic);
   const [currentCell, setCurrentCell] = useState(null);
   const [cellValue, setCellValue] = useState("");
 
   useMemo(() => {
-    setLocalAttendance(attendance || {});
-  }, [attendance]);
+    setLocalTraffic(traffic);
+  }, [traffic]);
 
-  const cellClick = useCallback((studentId, eventKey, value) => {
-    setCurrentCell({ studentId, eventKey });
+  const cellClick = useCallback((id, eventKey, value) => {
+    setCurrentCell({ id, eventKey });
     setCellValue(value.toString() || "");
   }, []);
 
@@ -23,26 +23,25 @@ export const useEditTable = ({ attendance, events, mutateFn }) => {
   }, []);
 
   const handleSave = useCallback(
-    (studentId, eventKey, value) => {
-      const updatedAttendance = {
-        ...localAttendance,
-        [studentId]: {
-          ...localAttendance[studentId],
+    (id, eventKey, value) => {
+      const updatedTraffic = {
+        ...localTraffic,
+        [id]: {
+          ...localTraffic[id],
           [eventKey]: value,
         },
       };
-      setLocalAttendance(updatedAttendance);
+      setLocalTraffic(updatedTraffic);
 
       const dataToSave = {
-        studentId,
+        id,
         events: events.map((event) => {
           const parts = event.name.split(" ");
           parts.pop();
 
           return {
             name: parts.join(" "),
-            point:
-              parseInt(updatedAttendance[studentId][event.key] || "0") || 0,
+            point: parseInt(updatedTraffic[id][event.key] || "0") || 0,
           };
         }),
       };
@@ -50,7 +49,7 @@ export const useEditTable = ({ attendance, events, mutateFn }) => {
       mutateFn(dataToSave);
       setCurrentCell(null);
     },
-    [localAttendance, events, mutateFn]
+    [localTraffic, events, mutateFn]
   );
 
   //TODO ВОЗМОЖНО УЛУЧШИТЬ ИЛИ ПОМЕНЯТЬ ВВОД
@@ -79,7 +78,7 @@ export const useEditTable = ({ attendance, events, mutateFn }) => {
   );
 
   return {
-    localAttendance,
+    localTraffic,
     currentCell,
     cellValue,
     cellClick,

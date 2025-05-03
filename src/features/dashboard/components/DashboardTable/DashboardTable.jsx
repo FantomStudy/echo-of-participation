@@ -1,50 +1,54 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useSaveAttendance } from "../../hooks/mutations/useSaveAttendance";
+import { useSaveTraffic } from "../../hooks/mutations/useSaveTraffic";
 import { useDashboardTable } from "../../hooks/queries/useDashboardTable";
 import { getEventStats } from "../../utils/calculateUtils";
 import { useEditTable } from "../../hooks/useEditTable";
 import { exportExcel } from "../../utils/exportUtils";
 import { formatName } from "@utils/formatUtils";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
-import styles from "../../styles/DashboardTable.module.css";
-import "react-loading-skeleton/dist/skeleton.css";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
-import { useSidebarStore } from "@stores/sidebarStore";
+import { useSidebar } from "@stores/sidebarStore";
+import "react-loading-skeleton/dist/skeleton.css";
+import styles from "../../styles/DashboardTable.module.css";
+import { useFilterStore } from "@stores/filterStore";
 
-export default function DashboardTable({ filterType }) {
-  const id = "filters";
-  const { initializeSidebar, getSidebar } = useSidebarStore();
+export default function DashboardTable() {
+  const { toggle } = useSidebar("filters");
+  const filters = useFilterStore((state) => state.filters);
 
-  useEffect(() => {
-    initializeSidebar(id);
-  }, [initializeSidebar]);
-
-  const { toggleShow } = getSidebar(id);
-
-  const { save, isSaving } = useSaveAttendance();
-  const { events, students, attendance, isLoading, error } =
-    useDashboardTable();
+  const { save, isSaving } = useSaveTraffic();
+  const { events, entities, traffic, isLoading, error } = useDashboardTable();
 
   const {
-    localAttendance,
+    localTraffic,
     currentCell,
     cellValue,
     cellClick,
     cellInputChange,
     handleInputBlurOrEnter,
-  } = useEditTable({ attendance, events, mutateFn: save });
+  } = useEditTable({ traffic, events, mutateFn: save });
+
+  const filterText = filters.filterLabel || "Все студенты";
 
   const tableContainer = useRef(null);
 
   const virtualizer = useVirtualizer({
-    count: students?.length,
+    count: entities?.length,
     getScrollElement: () => tableContainer.current,
     estimateSize: () => 47,
   });
-
   const vItems = virtualizer.getVirtualItems();
+
+  const headTable =
+    !filters.filterType || filters.filterType === "journal"
+      ? "ФИО"
+      : filters.filterType === "departments"
+      ? "Отделения"
+      : filters.filterType === "groupes"
+      ? "Группы"
+      : null;
 
   if (error) {
     return <div>{error}</div>;
@@ -56,25 +60,24 @@ export default function DashboardTable({ filterType }) {
         <div className={styles.name_section}>
           <p>Выбранный фильтр</p>
           <div className={styles.block}>
-            <p>{"Все студенты"}</p>
+            <p>{filterText}</p>
           </div>
         </div>
         <div className={styles.button_section}>
-          <button className={styles.filter_btn} onClick={toggleShow}>
+          <button className={styles.button} onClick={toggle}>
             Фильтры
           </button>
           <button
-            className={styles.filter_btn}
-            onClick={() => exportExcel({ students, events, attendance })}
-            style={{ marginLeft: "10px" }}
+            className={styles.button}
+            // onClick={() => exportExcel({ entities, events, traffic })}
           >
             Экспорт в Excel
           </button>
         </div>
       </div>
-      <FilterSidebar />
+
       {isLoading ? (
-        <Skeleton height="100%" />
+        <Skeleton height="100%" borderRadius="0 0 15px 15px" />
       ) : (
         <div className={styles.tableContainer} ref={tableContainer}>
           <table
@@ -85,10 +88,9 @@ export default function DashboardTable({ filterType }) {
           >
             <thead>
               <tr key="header-row">
-                <th key="group-name">ФИО</th>
-                {events.map((event) => (
+                <th>{headTable}</th>
+                {events?.map((event) => (
                   <th
-                    key={`event-header-${event.key}`}
                     className={
                       event.name.includes("Промежуточная аттестация")
                         ? styles.highlightedHeader
@@ -105,8 +107,7 @@ export default function DashboardTable({ filterType }) {
 
             <tbody>
               {vItems.map((vItem) => {
-                const student = students[vItem.index];
-
+                const entity = entities[vItem.index];
                 return (
                   <tr
                     key={vItem.key}
@@ -118,53 +119,18 @@ export default function DashboardTable({ filterType }) {
                     }}
                   >
                     <td
-                      key={`student-name-${student.id}`}
-                      //   onClick={() => handleStudentClick(student.id)}
                       className={`${styles.studentNameCell} ${
-                        filterType === "students" ? styles.clickable : ""
+                        filters.filterType === "" ? styles.clickable : ""
                       }`}
+                      onClick={() => {}}
                     >
-                      {formatName(student.name)}
+                      {!filters.filterType || filters.filterType === "journal"
+                        ? formatName(entity.name)
+                        : entity.name}
                     </td>
                     {events.map((event) => (
-                      <td
-                        key={`attendance-${student.id}-${event.key}`}
-                        onClick={() =>
-                          cellClick(
-                            student.id,
-                            event.key,
-                            localAttendance[student.id][event.key]
-                          )
-                        }
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        className={
-                          event.name.includes("Промежуточная аттестация")
-                            ? styles.highlightedCell
-                            : ""
-                        }
-                      >
-                        {currentCell?.studentId === student.id &&
-                        currentCell?.eventKey === event.key ? (
-                          <input
-                            name="editable_cell"
-                            type="text"
-                            value={cellValue}
-                            onChange={cellInputChange}
-                            onBlur={(e) =>
-                              handleInputBlurOrEnter(e, student.id, event.key)
-                            }
-                            onKeyDown={(e) =>
-                              handleInputBlurOrEnter(e, student.id, event.key)
-                            }
-                            autoFocus
-                            disabled={isSaving}
-                            className={styles.attendanceInput}
-                          />
-                        ) : (
-                          localAttendance[student.id][event.key]
-                        )}
+                      <td style={{ cursor: "pointer" }}>
+                        {traffic[entity.id][event.key]}
                       </td>
                     ))}
                   </tr>
@@ -176,15 +142,74 @@ export default function DashboardTable({ filterType }) {
               <tr>
                 <th>Итого</th>
                 {events.map((event) => (
-                  <th key={`event-footer-${event.key}`}>
-                    {getEventStats(event.key, localAttendance)}
-                  </th>
+                  <th>{getEventStats(event.key, traffic)}</th>
                 ))}
               </tr>
             </tfoot>
           </table>
         </div>
+
+        //
+        //             {events.map((event) => (
+        //               <td
+        //                 key={`attendance-${student.id}-${event.key}`}
+        //                 onClick={() =>
+        //                   cellClick(
+        //                     student.id,
+        //                     event.key,
+        //                     localTraffic[student.id][event.key]
+        //                   )
+        //                 }
+        //                 style={{
+        //                   cursor: "pointer",
+        //                 }}
+        //                 className={
+        //                   event.name.includes("Промежуточная аттестация")
+        //                     ? styles.highlightedCell
+        //                     : ""
+        //                 }
+        //               >
+        //                 {currentCell?.studentId === student.id &&
+        //                 currentCell?.eventKey === event.key ? (
+        //                   <input
+        //                     name="editable_cell"
+        //                     type="text"
+        //                     value={cellValue}
+        //                     onChange={cellInputChange}
+        //                     onBlur={(e) =>
+        //                       handleInputBlurOrEnter(e, student.id, event.key)
+        //                     }
+        //                     onKeyDown={(e) =>
+        //                       handleInputBlurOrEnter(e, student.id, event.key)
+        //                     }
+        //                     autoFocus
+        //                     disabled={isSaving}
+        //                     className={styles.attendanceInput}
+        //                   />
+        //                 ) : (
+        //                   localTraffic[student.id][event.key]
+        //                 )}
+        //               </td>
+        //             ))}
+        //           </tr>
+        //         );
+        //       })}
+        //     </tbody>
+
+        //     <tfoot>
+        //       <tr>
+        //         <th>Итого</th>
+        //         {events?.map((event) => (
+        //           <th key={`event-footer-${event.key}`}>
+        //             {getEventStats(event.key, localTraffic)}
+        //           </th>
+        //         ))}
+        //       </tr>
+        //     </tfoot>
+        //   </table>
+        // </div>
       )}
+      <FilterSidebar />
     </>
   );
 }

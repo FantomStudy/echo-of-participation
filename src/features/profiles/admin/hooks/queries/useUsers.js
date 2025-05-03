@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCheckAuth } from "@stores/localStore";
+import { useCheckAuth } from "@stores/authStore";
 import { fetchAllUsers } from "../../api/adminProfileApi";
 
 export const useUsers = () => {

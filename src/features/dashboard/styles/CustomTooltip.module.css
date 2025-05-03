@@ -16,11 +16,11 @@
   font-size: 16px;
   line-height: 1.4;
   z-index: 100;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+  box-shadow: var(--lite-shadow);
   pointer-events: none;
-  
-  /* white-space: nowrap; */
-  max-width: 250px;
+
+  max-width: 275px;
 }
 
 .eventName {

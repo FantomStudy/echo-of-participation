@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@configs/queryClientConfig";
-import { saveAttendance } from "@features/dashboard/api/dashboardApi";
+import { saveTraffic } from "@dashboard/api/tableApi";
 
-export const useSaveAttendance = () => {
+export const useSaveTraffic = () => {
   const { mutate, isPending } = useMutation({
-    mutationFn: (dataToSave) => saveAttendance(dataToSave),
+    mutationFn: (dataToSave) => saveTraffic(dataToSave),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["topStudents"] });
       console.log("Данные успешно сохранены");

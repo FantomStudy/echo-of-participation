@@ -1,10 +1,10 @@
 import api from "@configs/axiosConfig";
 import { getCookie } from "@utils/cookieUtils";
 
-export const fetchUser = async () => {
+export const fetchCurrentUser = async () => {
   const accessToken = getCookie("access_token");
   if (!accessToken) {
-    throw new Error("Токен отсутствует");
+    throw new Error("Не удалось найти токен");
   }
 
   const response = await api.post(`/user/profile`, {

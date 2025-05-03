@@ -1,19 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchUser } from "@api/userApi";
-import { useCheckAuth } from "@stores/localStore";
+import { fetchCurrentUser } from "@api/currentUserApi";
+import { useCheckAuth } from "@stores/authStore";
 
 export const useCurrentUser = () => {
-  const checkAuth = useCheckAuth();
+  const isAuth = useCheckAuth();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["currentUser"],
-    queryFn: fetchUser,
-    enabled: checkAuth,
+    queryFn: fetchCurrentUser,
+    enabled: isAuth,
   });
 
   return {
     user: data,
-    roleName: data?.roleName,
     isLoading,
     error,
   };

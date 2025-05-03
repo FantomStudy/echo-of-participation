@@ -1,20 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCheckAuth } from "@stores/localStore";
-import { fetchTableData } from "../../api/dashboardApi";
+import { fetchTableData } from "@dashboard/api/tableApi";
+import { useCheckAuth } from "@stores/authStore";
+import { useFilterStore } from "@stores/filterStore";
 
 export const useDashboardTable = () => {
-  const checkAuth = useCheckAuth();
+  const isAuth = useCheckAuth();
+  const filters = useFilterStore((state) => state.filters);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["dashboardTable"],
-    queryFn: () => fetchTableData({}),
-    enabled: checkAuth,
+    queryKey: ["tableData", filters],
+    queryFn: () =>
+      fetchTableData({
+        type: filters.filterType,
+        id: filters.id,
+        sort: filters.sort,
+        customRange: filters.customRange,
+      }),
+    enabled: isAuth,
   });
 
   return {
-    events: data?.eventList,
-    students: data?.studentList,
-    attendance: data?.attendanceData,
+    events: data?.events,
+    entities: data?.entities,
+    traffic: data?.traffic,
     isLoading,
     error,
   };

@@ -1,18 +1,18 @@
-import { useCheckAuth } from "@/shared/stores/localStore";
 import { useQuery } from "@tanstack/react-query";
-import { fetchGroups } from "../../api/dashboardApi";
+import { fetchGroups } from "@dashboard/api/dashboardApi";
+import { useCheckAuth } from "@stores/authStore";
 
 export const useGroups = () => {
-  const checkAuth = useCheckAuth();
+  const isAuth = useCheckAuth();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["groups"],
     queryFn: fetchGroups,
-    enabled: checkAuth,
+    enabled: isAuth,
   });
 
   return {
-    groups: data,
+    data,
     isLoading,
     error,
   };

@@ -13,7 +13,7 @@ export default function App() {
   }
 
   if (error) {
-    return <div>ERROR FETCH USER</div>;
+    return <div>Не удалось получить данные пользователя</div>;
   }
 
   return (

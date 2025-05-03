@@ -10,13 +10,9 @@ export default function Dashboard() {
       <div className={styles.grid}>
         <div className={styles.grid_area}></div>
 
-        <div className={styles.grid_area}>
-          <TopStudents />
-        </div>
+        <div className={styles.grid_area}>{/* <TopStudents /> */}</div>
 
-        <div className={styles.grid_area}>
-          <TopOrganizers />
-        </div>
+        <div className={styles.grid_area}>{/* <TopOrganizers /> */}</div>
 
         <div className={`${styles.grid_area} ${styles.wide}`}>
           <DashboardTable />

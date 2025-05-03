@@ -1,6 +1,6 @@
-import { fetchAllEvents } from "../../api/adminProfileApi";
-import { useCheckAuth } from "@stores/localStore";
 import { useQuery } from "@tanstack/react-query";
+import { fetchAllEvents } from "../../api/adminProfileApi";
+import { useCheckAuth } from "@stores/authStore";
 
 export const useEvents = () => {
   const checkAuth = useCheckAuth();
