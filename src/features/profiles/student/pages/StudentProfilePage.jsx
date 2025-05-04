@@ -5,13 +5,13 @@ import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import axios from "axios";
 import styles from "../styles/StudentProfilePage.module.css";
-import Header from "@shared/components/Header/Header";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "@/shared/components/Loader/Loader";
 
 const StudentProfilePage = () => {
   const { studentId } = useParams();
   const location = useLocation();
-  const navigate = useNavigate(); // Инициализация useNavigate
+  const navigate = useNavigate();
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState("all");
@@ -126,11 +126,15 @@ const StudentProfilePage = () => {
   };
 
   const handleBack = () => {
-    navigate("/events"); // Перенаправление на /events (можно изменить путь)
+    navigate("/");
   };
 
   if (loading) {
-    return <div className={styles.loading}>Загрузка...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (!studentData) {
@@ -141,7 +145,6 @@ const StudentProfilePage = () => {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <button
           onClick={handleBack}
