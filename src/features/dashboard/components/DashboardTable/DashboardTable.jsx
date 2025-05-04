@@ -44,7 +44,7 @@ export default function DashboardTable() {
 
   const isStudents = !filters.filterType || filters.filterType === "journal";
   const isDepartments = filters.filterType === "departments";
-  const isGroups = filters.filterType === "groupes";
+  const isGroups = ["groupes", "course"].includes(filters.filterType);
 
   const headTable = isStudents
     ? "ФИО"

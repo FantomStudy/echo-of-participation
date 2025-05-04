@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/AddUserPage.module.css";
+import { useRoles } from "../hooks/queries/useRoles";
+import api from "@/shared/configs/axiosConfig";
 
 //TODO СДЕЛАТЬ ПО АНАЛОГИИ С ЛОГИНОМ(БЕСТ ПРАКТИС РЕАКТ 19)
 export default function AddUserPage() {
+  const roles = useRoles();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     login: "",
@@ -12,54 +16,7 @@ export default function AddUserPage() {
     role: "",
   });
 
-  const [roles, setRoles] = useState([]);
-  const [rolesLoading, setRolesLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      const accessToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("access_token="))
-        ?.split("=")[1];
-
-      if (!accessToken) {
-        setError("Токен не найден");
-        setRolesLoading(false);
-        return;
-      }
-
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/role/all-roles",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            withCredentials: true,
-          }
-        );
-        setRoles(response.data);
-        console.log(accessToken);
-
-        console.log(response.data);
-
-        if (response.data.length > 0) {
-          setFormData((prev) => ({ ...prev, role: response.data[0].value }));
-        }
-      } catch (err) {
-        console.error("Ошибка при загрузке ролей:", err);
-        setError("Не удалось загрузить роли");
-      } finally {
-        setRolesLoading(false);
-      }
-    };
-
-    fetchRoles();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +30,6 @@ export default function AddUserPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(null);
 
     const accessToken = document.cookie
       .split("; ")
@@ -87,25 +43,21 @@ export default function AddUserPage() {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/register",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await api.post("/auth/register", formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      });
       console.log("Пользователь успешно добавлен:", response.data);
-      setSuccess("Пользователь успешно добавлен");
+
       setFormData({
         fullName: "",
         login: "",
         password: "",
-        role: roles[0]?.value || "",
+        role: roles.data[0]?.value || "",
       });
-      // Перенаправление на /admin после успешного добавления
+
       navigate("/admin");
     } catch (err) {
       setError(
@@ -154,30 +106,39 @@ export default function AddUserPage() {
             name="role"
             value={formData.role}
             onChange={handleChange}
-            disabled={rolesLoading || roles.length === 0}
+            disabled={roles.isLoading || roles.data.length === 0}
           >
-            {rolesLoading ? (
+            {roles.isLoading ? (
               <option>Загрузка ролей...</option>
-            ) : roles.length === 0 ? (
+            ) : roles.data.length === 0 ? (
               <option>Роли не найдены</option>
             ) : (
-              roles.map((role) => (
+              roles.data.map((role) => (
                 <option key={role.value} value={role.value}>
                   {role.name}
                 </option>
               ))
             )}
           </select>
+          {error && <p className={styles.error}>{error}</p>}
           <button
             type="submit"
             className={styles.button}
-            disabled={loading || rolesLoading}
+            disabled={loading || roles.isLoading}
           >
             {loading ? "Добавление..." : "Добавить пользователя"}
           </button>
+          <Link
+            to={"/admin"}
+            style={{
+              textAlign: "center",
+              textDecoration: "none",
+              color: "var(--font-secondary-color)",
+            }}
+          >
+            Вернуться в кабинет
+          </Link>
         </form>
-        {error && <p className={styles.error}>{error}</p>}
-        {success && <p className={styles.success}>{success}</p>}
       </div>
     </div>
   );

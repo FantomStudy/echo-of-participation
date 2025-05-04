@@ -17,8 +17,13 @@ export const useActivityRating = () => {
       : `allGroupes`;
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["activityRating", filterParams],
-    queryFn: () => fetchActivityRating(filterParams),
+    queryKey: ["activityRating", filters],
+    queryFn: () =>
+      fetchActivityRating({
+        filter: filterParams,
+        sort: filters.sort,
+        customRange: filters.customRange,
+      }),
     enabled: isAuth,
   });
 

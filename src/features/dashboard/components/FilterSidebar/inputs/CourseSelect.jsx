@@ -3,14 +3,13 @@ import styles from "@dashboard/styles/FilterSidebar.module.css";
 const CourseSelect = ({ value, handleFilterChange }) => {
   return (
     <select
-      disabled
       className={styles.select}
       value={value}
       onChange={(e) => {
         const value = e.target.value;
         handleFilterChange({
           filterType: "course",
-          course: value,
+          courseId: value,
           filterLabel: value ? `${value} курс` : "",
         });
       }}

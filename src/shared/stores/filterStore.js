@@ -7,7 +7,6 @@ export const useFilterStore = create(
       filters: {
         filterType: "",
         id: "",
-        course: "",
         sort: "all",
         customRange: "",
         filterLabel: "",
@@ -20,7 +19,6 @@ export const useFilterStore = create(
           filters: {
             filterType: "",
             id: "",
-            course: "",
             sort: "all",
             customRange: "",
             filterLabel: "",

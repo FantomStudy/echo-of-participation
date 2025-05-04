@@ -18,7 +18,7 @@ const FilterSidebar = () => {
     filterType: "",
     depId: "",
     groupId: "",
-    course: "",
+    courseId: "",
     sort: "",
     customRange: "",
     filterLabel: "",
@@ -29,7 +29,7 @@ const FilterSidebar = () => {
       filterType: "",
       depId: "",
       groupId: "",
-      course: "",
+      courseId: "",
       sort: "",
       customRange: "",
       filterLabel: "",
@@ -39,7 +39,7 @@ const FilterSidebar = () => {
 
   const handleFilterChange = ({
     filterType = "",
-    course = "",
+    courseId = "",
     depId = "",
     groupId = "",
     filterLabel = "",
@@ -47,7 +47,7 @@ const FilterSidebar = () => {
     setFilterState((prev) => ({
       ...prev,
       filterType,
-      course,
+      courseId,
       depId,
       groupId,
       filterLabel,
@@ -74,11 +74,12 @@ const FilterSidebar = () => {
         ? filterState.depId
         : filterState.filterType === "journal"
         ? filterState.groupId
+        : filterState.filterType === "course"
+        ? filterState.courseId
         : null;
 
     setFilters({
       filterType: filterState.filterType,
-      course: filterState.course,
       id,
       sort: filterState.sort,
       customRange: filterState.customRange,
@@ -115,7 +116,7 @@ const FilterSidebar = () => {
           </button>
 
           <CourseSelect
-            value={filterState.course}
+            value={filterState.courseId}
             handleFilterChange={handleFilterChange}
           />
 

@@ -3,49 +3,33 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { format, subWeeks, subMonths } from "date-fns";
 import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
-import axios from "axios";
 import styles from "../styles/StudentProfilePage.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-import Loader from "@/shared/components/Loader/Loader";
+import Loader from "@components/Loader/Loader";
+import { useStudent } from "../hooks/business/query/useStudent";
 
 const StudentProfilePage = () => {
   const { studentId } = useParams();
+  const { data, isLoading } = useStudent(studentId);
   const location = useLocation();
   const navigate = useNavigate();
-  const [studentData, setStudentData] = useState(null);
-  const [loading, setLoading] = useState(true);
+
   const [sort, setSort] = useState("all");
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
   useEffect(() => {
-    const fetchStudentData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/student/profile/${studentId}`
-        );
-        setStudentData(response.data);
-        setLoading(false);
-
-        const queryParams = new URLSearchParams(location.search);
-        const sortParam = queryParams.get("sort") || "all";
-        const customSortParam = queryParams.get("customSort");
-        setSort(sortParam);
-
-        if (sortParam === "custom" && customSortParam) {
-          const [startStr, endStr] = customSortParam.split("-");
-          const start = parseDate(startStr);
-          const end = parseDate(endStr);
-          setDateRange([start, end]);
-        }
-      } catch (error) {
-        console.error("Ошибка при загрузке данных студента:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchStudentData();
-  }, [studentId]);
+    const queryParams = new URLSearchParams(location.search);
+    const sortParam = queryParams.get("sort") || "all";
+    const customSortParam = queryParams.get("customSort");
+    setSort(sortParam);
+    if (sortParam === "custom" && customSortParam) {
+      const [startStr, endStr] = customSortParam.split("-");
+      const start = parseDate(startStr);
+      const end = parseDate(endStr);
+      setDateRange([start, end]);
+    }
+  }, [location.search]);
 
   const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split(".");
@@ -129,19 +113,15 @@ const StudentProfilePage = () => {
     navigate("/");
   };
 
-  if (loading) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
+  if (isLoading) {
+    return <Loader />;
   }
 
-  if (!studentData) {
+  if (!data) {
     return <div className={styles.noData}>Данные студента не найдены</div>;
   }
 
-  const filteredEvents = filterEventsBySort(studentData.events);
+  const filteredEvents = filterEventsBySort(data.events);
 
   return (
     <>
@@ -165,22 +145,22 @@ const StudentProfilePage = () => {
           </svg>
         </button>
         <div className={styles.profileHeader}>
-          <h1>{studentData.fullName}</h1>
+          <h1>{data.fullName}</h1>
           <div className={styles.studentInfo}>
             <p>
-              <strong>Группа:</strong> {studentData.groupeName}
+              <strong>Группа:</strong> {data.groupeName}
             </p>
             <p>
-              <strong>Отделение:</strong> {studentData.departmentName}
+              <strong>Отделение:</strong> {data.departmentName}
             </p>
             <p>
-              <strong>Курс:</strong> {studentData.course}
+              <strong>Курс:</strong> {data.course}
             </p>
             <p>
-              <strong>Пол:</strong> {studentData.gender}
+              <strong>Пол:</strong> {data.gender}
             </p>
             <p>
-              <strong>Дата рождения:</strong> {studentData.dateOfBIrth}
+              <strong>Дата рождения:</strong> {data.dateOfBIrth}
             </p>
           </div>
         </div>

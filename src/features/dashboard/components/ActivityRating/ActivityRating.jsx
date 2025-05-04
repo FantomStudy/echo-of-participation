@@ -18,6 +18,8 @@ const ActivityRating = ({ data, error, isLoading }) => {
     ? `${filters.filterLabel}`
     : isStudents
     ? `Список лучших в ${filters.filterLabel}`
+    : filters.filterType === "course"
+    ? `Лучшие группы ${filters.id} курса`
     : `Список лучших групп`;
 
   if (error) {

@@ -10,14 +10,14 @@
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--lite-shadow);
   width: 100%;
   max-width: 400px;
 }
 
 .title {
   text-align: center;
-  color: #4a5e83;
+  color: var(--font-blue-color);
   margin-bottom: 20px;
 }
 
@@ -51,7 +51,7 @@
 
 .button {
   padding: 12px;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   border: none;
   border-radius: 8px;
   color: #ffffff;
@@ -61,13 +61,13 @@
 }
 
 .button:hover {
-  background-color: #035ab7;
+  background-color: var(--primary-hover-color);
 }
 
 .error {
   margin-top: 1rem;
   text-align: center;
-  color: #ff0000;
+  color: var(--danger-color);
 }
 
 .success {
