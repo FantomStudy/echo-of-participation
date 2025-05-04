@@ -39,9 +39,9 @@ export const routes = [
   {
     path: "/admin",
     element: (
-      <ProtectedRoute requiredRole="Администратор">
-        <AdminProfilePage />
-      </ProtectedRoute>
+      // <ProtectedRoute requiredRole="Администратор">
+      <AdminProfilePage />
+      // </ProtectedRoute>
     ),
   },
   {

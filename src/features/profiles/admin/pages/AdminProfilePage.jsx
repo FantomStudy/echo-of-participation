@@ -11,8 +11,10 @@ import { useAddEvent } from "../hooks/mutations/useAddEvent";
 import { useDeleteEvent } from "../hooks/mutations/useDeleteEvent";
 import Modal from "@components/Modal/Modal";
 import { useShowUI } from "@hooks/ui/useShowUI";
+import Skeleton from "react-loading-skeleton";
 import styles from "../styles/AdminProfilePage.module.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AdminProfilePage() {
   const currentUser = queryClient.getQueryData(["currentUser"]);
@@ -69,16 +71,36 @@ export default function AdminProfilePage() {
     }
   };
 
-  //TODO ЗАМЕНИ НА СКЕЛЕТОН КОМПОНЕНТ
   if (eventsLoading || usersLoading) {
-    return <div className={styles.loading}>Загрузка...</div>;
+    return (
+      <div className={styles.container}>
+        <div className={styles.profileContainer}>
+          <Skeleton height={40} width="50%" style={{ marginBottom: "20px" }} />
+          <div className={styles.admins_tables}>
+            <div className={styles.info_wrapper}>
+              <Skeleton height={30} width="30%" />
+              <div className={styles.tralalero}>
+                <Skeleton count={3} height={60} style={{ margin: "10px 0" }} />
+              </div>
+              <Skeleton height={40} width={200} />
+            </div>
+            <div className={styles.event_table}>
+              <div className={styles.create_event}>
+                <Skeleton height={30} width="20%" />
+                <Skeleton height={40} width={200} />
+              </div>
+              <Skeleton count={5} height={50} style={{ margin: "10px 0" }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  //TODO ЗАМЕНИ НА ОБРАБОТКУ ВНУТРИ КОМПОНЕНТА
   if (eventsError || usersError) {
     return (
       <div className={styles.error}>
-        Ошибка: {eventsError} {usersError}{" "}
+        Ошибка: {eventsError} {usersError}
       </div>
     );
   }
@@ -108,7 +130,7 @@ export default function AdminProfilePage() {
                   </div>
                 </>
               ) : (
-                <></>
+                <Skeleton count={3} height={60} style={{ margin: "10px 0" }} />
               )}
             </div>
             <Link to="/admin/add-user" className={styles.add_event_btn}>

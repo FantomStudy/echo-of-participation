@@ -1,7 +1,7 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 15px;
+  padding: 0.9375rem;
 }
 
 .profileContainer {
@@ -10,9 +10,9 @@
 
 .profileContainer h1 {
   text-align: center;
-  margin: 40px 0;
+  margin: 2.5rem 0;
   font-weight: 600;
-  font-size: 28px;
+  font-size: clamp(1.5rem, 5vw, 1.75rem);
   line-height: 100%;
   color: #5c81ff;
 }
@@ -20,46 +20,46 @@
 .admins_tables {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 .info_wrapper {
   border: solid 2px #f4f4f4;
-  width: 315px;
+  width: 19.6875rem;
   height: fit-content;
-  border-radius: 15px;
-  padding: 25px 20px;
+  border-radius: 0.9375rem;
+  padding: 1.5625rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1.875rem;
 }
 
 .info_wrapper h2 {
   font-weight: 500;
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3vw, 1.25rem);
 }
 
 .tralalero {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.9375rem;
 }
 
 .blockInfo h3 {
   font-weight: 500;
-  font-size: 18px;
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
 }
 
 .blockInfo p {
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
 }
 
 .event_table {
   border: solid 2px #f4f4f4;
-  width: 1000px;
-  border-radius: 15px;
-  padding: 15px 20px;
+  width: 62.5rem;
+  border-radius: 0.9375rem;
+  padding: 0.9375rem 1.25rem;
 }
 
 .create_event {
@@ -67,28 +67,28 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #f4f4f4;
-  padding: 0 0 10px;
-  margin-bottom: 15px;
+  padding: 0 0 0.625rem;
+  margin-bottom: 0.9375rem;
 }
 
 .create_event h2 {
   font-weight: 500;
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3vw, 1.25rem);
 }
 
 .addEventForm {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 0.5rem;
+  margin-bottom: 0.9375rem;
 }
 
 .eventInput {
   flex: 1;
-  padding: 6px;
+  padding: 0.375rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 0.25rem;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
 }
 
 .add_event_btn {
@@ -96,11 +96,12 @@
   background-color: #5c81ff;
   border: none;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
   text-align: center;
   font-weight: 500;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
+  width: 14rem;
   transition: 0.3s ease-in-out;
 }
 
@@ -117,9 +118,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 0.5rem;
   border-bottom: 1px solid #ddd;
-  font-size: 146x;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
 }
 
 .eventItem:last-child {
@@ -127,13 +128,14 @@
 }
 
 .deleteButton {
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   background-color: #ff4444;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
-  font-size: 12px;
+  font-size: clamp(0.625rem, 1.8vw, 0.75rem);
+  width: 5rem;
 }
 
 .deleteButton:hover {
@@ -142,75 +144,93 @@
 
 .loading {
   text-align: center;
-  padding: 15px;
-  font-size: 16px;
+  padding: 0.9375rem;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
 }
 
 .error {
   text-align: center;
-  padding: 15px;
-  font-size: 16px;
+  padding: 0.9375rem;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
   color: #ff0000;
 }
 
 .actionsSection {
-  margin-top: 15px;
+  margin-top: 0.9375rem;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 0.9375rem;
   align-items: center;
 }
 
+.addUserLink {
+  cursor: pointer;
+  background-color: #5c81ff;
+  border: none;
+  color: #fff;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
+  width: 12.5rem;
+  transition: 0.3s ease-in-out;
+  text-decoration: none;
+}
+
 .addUserLink:hover {
-  background-color: #45a049;
+  background-color: #4e75f8;
 }
 
 .logoutButton {
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   background-color: #ff4444;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  width: 8rem;
 }
 
 .logoutButton:hover {
   background-color: #cc0000;
 }
 
-/* MODAL CONTENT STYLES */
 .modal_content_wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-gap: 30px;
+  gap: 1.875rem;
 }
+
 .modal_input,
 .date_picker,
 .modal_select {
   width: 100%;
   box-sizing: border-box;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  padding: 10px 15px;
+  border-radius: 0.625rem;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
+  padding: 0.625rem 0.9375rem;
   background-color: #f1f2f6;
 }
+
 .date_picker_wrapper {
   width: 100%;
 }
+
 .modal_select {
-  padding-right: 40px; /* Отступ справа для иконки стрелки */
-  appearance: none; /* Убираем стандартную стрелку в select */
+  padding-right: 2.5rem;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-image: url("/sellectArrow.png");
   background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 12px;
+  background-position: right 0.9375rem center;
+  background-size: 0.75rem;
   cursor: pointer;
 }
 
@@ -221,37 +241,49 @@
 
 .modal_title {
   font-weight: 600;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   line-height: 150%;
   text-align: center;
   color: #0069ff;
 }
 
-/* Планшеты (768px–1024px) */
 @media (max-width: 1024px) {
   .container {
     max-width: 100%;
-    padding: 10px;
+    padding: 0.625rem;
   }
 
   .profileContainer h1 {
-    font-size: 20px;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
   }
 
   .admins_tables {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
 
-  .info_wrapper,
+  .info_wrapper {
+    order: -1;
+    width: 100%;
+    max-width: 37.5rem;
+    padding: 1rem;
+    margin: 0 auto;
+  }
+  .add_event_btn {
+    padding: 10px;
+  }
   .event_table {
     width: 100%;
-    max-width: 600px;
+    max-width: 37.5rem;
+    padding: 1rem;
+    margin: 0 auto;
   }
 
   .addEventForm {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.625rem;
   }
 
   .eventInput,
@@ -259,41 +291,35 @@
     width: 100%;
   }
 
-  .add_event_btn {
-    width: 100%;
-  }
-
   .actionsSection {
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .addUserLink,
-  .logoutButton {
-    width: 100%;
-    text-align: center;
+    gap: 0.625rem;
   }
 }
 
-/* Телефоны (до 768px) */
 @media (max-width: 768px) {
   .container {
-    padding: 8px;
+    padding: 0.5rem;
   }
 
   .info_wrapper h2,
   .create_event h2 {
-    font-size: 18px;
+    font-size: clamp(1rem, 2.8vw, 1.125rem);
   }
 
   .info_wrapper,
   .event_table {
-    padding: 10px;
+    padding: 0.625rem;
+    margin: 0 auto;
   }
-
+  .add_event_btn {
+    max-width: 150px;
+    padding: 10px;
+    font-size: 12px;
+  }
   .addEventForm {
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .eventInput,
@@ -301,64 +327,45 @@
     width: 100%;
   }
 
-  .add_event_btn {
-    width: 100%;
-    padding: 8px;
-  }
-
   .eventItem {
-    flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
-  }
-
-  .deleteButton {
-    width: 100%;
-    text-align: center;
+    gap: 0.3125rem;
   }
 
   .actionsSection {
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
-  .addUserLink,
-  .logoutButton {
-    width: 100%;
-    padding: 8px;
+  span {
+    max-width: 290px;
+  }
+
+  .deleteButton {
+    width: 60px;
   }
 }
 
 /* Очень маленькие экраны (до 480px) */
 @media (max-width: 480px) {
   .profileContainer h1 {
-    font-size: 18px;
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
   }
 
   .info_wrapper h2,
   .create_event h2 {
-    font-size: 16px;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
   }
 
   .blockInfo h3,
   .blockInfo p,
   .eventItem,
   .eventInput,
-  .datePicker,
-  .add_event_btn,
-  .deleteButton,
-  .addUserLink,
-  .logoutButton {
-    font-size: 12px;
+  .datePicker {
+    font-size: clamp(0.75rem, 2.2vw, 0.875rem);
   }
 
-  .backButton {
-    width: 25px;
-    height: 25px;
-  }
-
-  .backButton svg {
-    width: 14px;
-    height: 14px;
+  .modal_title {
+    font-size: clamp(1rem, 3vw, 1.25rem);
   }
 }
