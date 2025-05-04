@@ -10,9 +10,15 @@
 
 .grid_area {
   padding: 20px;
-  min-height: 315px;
+  min-height: 415px;
   border-radius: 15px;
   border: solid 2px var(--light-border-color);
+  box-sizing: border-box;
+}
+
+.grid_area.diagram {
+  display: flex;
+  justify-content: center;
 }
 
 .grid_area.wide {

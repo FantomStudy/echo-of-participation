@@ -9,7 +9,7 @@ import CourseSelect from "./inputs/CourseSelect";
 import styles from "../../styles/FilterSidebar.module.css";
 
 const FilterSidebar = () => {
-  const { filters, setFilters, resetFilters } = useFilterStore();
+  const { setFilters, resetFilters } = useFilterStore();
   const { toggle } = useSidebar("filters");
 
   const [error, setError] = useState(null);
@@ -60,6 +60,11 @@ const FilterSidebar = () => {
   const handleApplyFilters = () => {
     if (!filterState.filterType) {
       setError("Пожалуйста, выберите тип фильтра.");
+      setTimeout(() => setError(null), 4000);
+      return;
+    }
+    if (filterState.sort === "custom" && !filterState.customRange) {
+      setError("Пожалуйста, выберите дату.");
       setTimeout(() => setError(null), 4000);
       return;
     }

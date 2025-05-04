@@ -9,3 +9,11 @@ export const getEventStats = (eventKey, attendance) => {
     0
   );
 };
+
+export const getStudentTotalPoints = (id, traffic) => {
+  const studentAttendance = traffic[id] || {};
+  return Object.values(studentAttendance).reduce(
+    (sum, value) => sum + (parseInt(value) || 0),
+    0
+  );
+};

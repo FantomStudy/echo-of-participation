@@ -1,13 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useEditTable = ({ traffic, events, mutateFn }) => {
-  const [localTraffic, setLocalTraffic] = useState(traffic);
+  const [localTraffic, setLocalTraffic] = useState({ ...traffic });
   const [currentCell, setCurrentCell] = useState(null);
   const [cellValue, setCellValue] = useState("");
 
-  useMemo(() => {
-    setLocalTraffic(traffic);
-  }, [traffic]);
+  useEffect(() => setLocalTraffic({ ...traffic }), [traffic]);
 
   const cellClick = useCallback((id, eventKey, value) => {
     setCurrentCell({ id, eventKey });
@@ -34,7 +32,7 @@ export const useEditTable = ({ traffic, events, mutateFn }) => {
       setLocalTraffic(updatedTraffic);
 
       const dataToSave = {
-        id,
+        studentId: id,
         events: events.map((event) => {
           const parts = event.name.split(" ");
           parts.pop();
@@ -54,7 +52,7 @@ export const useEditTable = ({ traffic, events, mutateFn }) => {
 
   //TODO ВОЗМОЖНО УЛУЧШИТЬ ИЛИ ПОМЕНЯТЬ ВВОД
   const handleInputBlurOrEnter = useCallback(
-    (e, studentId, eventKey) => {
+    (e, id, eventKey) => {
       if (e.type === "blur") {
         setCurrentCell(null);
       }
@@ -63,7 +61,7 @@ export const useEditTable = ({ traffic, events, mutateFn }) => {
 
         if (key === "1" || key === "0") {
           setCellValue(key);
-          handleSave(studentId, eventKey, key);
+          handleSave(id, eventKey, key);
         } else if (
           key !== "Backspace" &&
           key !== "ArrowLeft" &&

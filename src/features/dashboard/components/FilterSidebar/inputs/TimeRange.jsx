@@ -80,7 +80,7 @@ const TimeRange = ({ value, filterType, setFilterState }) => {
         <option value="all">Все время</option>
         <option value="week">Неделя</option>
         <option value="month">Месяц</option>
-        <option value="halfYear">Полгода</option>
+        <option value="halfYear">Полугодие</option>
         <option value="custom">Пользовательский</option>
       </select>
 

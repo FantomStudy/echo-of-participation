@@ -25,7 +25,6 @@ export const fetchTableData = async ({
     if (sort && sort !== "all") params.append("sort", sort);
     if (sort === "custom" && customRange)
       params.append("customRange", customRange);
-    console.log(`/filters/${type}?${params.toString()}`);
 
     response = await api.get(`/filters/${type}?${params.toString()}`);
   }

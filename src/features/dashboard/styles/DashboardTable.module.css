@@ -27,6 +27,11 @@
   z-index: 1;
 }
 
+/* Выравнить по центру, тест */
+.table tr {
+  display: flex;
+}
+
 .table th,
 .table td {
   padding: 10px;
@@ -53,7 +58,9 @@
 }
 
 .table tbody td:first-child,
-.table thead th:first-child {
+.table thead th:first-child,
+.table tfoot th:first-child {
+  width: 100%;
   min-width: 280px;
   max-width: 280px;
   padding-left: 15px;
@@ -64,7 +71,18 @@
   text-overflow: ellipsis;
 }
 
-.attendanceInput {
+.table tfoot th:first-child {
+  text-align: center;
+}
+.clickable_block {
+  transition: 0.25s background-color ease;
+}
+.clickable_block:hover {
+  background-color: var(--light-hover-color);
+  cursor: pointer;
+}
+
+.trafficInput {
   width: 30px;
   text-align: center;
   background-color: transparent;

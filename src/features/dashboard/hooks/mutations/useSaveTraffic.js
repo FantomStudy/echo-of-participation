@@ -6,7 +6,7 @@ export const useSaveTraffic = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (dataToSave) => saveTraffic(dataToSave),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ["topStudents"] });
+      await queryClient.refetchQueries({ queryKey: ["activityRating"] });
       console.log("Данные успешно сохранены");
     },
     onError: (error) => {

@@ -1,11 +1,11 @@
-import { useOrganizersTop } from "../../hooks/queries/useOrganizersTop";
+import { useOrganizersRating } from "../../hooks/queries/useOrganizersRating";
 import { formatName } from "@/shared/utils/formatUtils";
 import styles from "../../styles/Top.module.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export default function TopOrganizers() {
-  const { organizers, error, isLoading } = useOrganizersTop();
+export default function OrganizersRating() {
+  const { data, error, isLoading } = useOrganizersRating();
 
   if (error) {
     return <>Error</>;
@@ -20,8 +20,8 @@ export default function TopOrganizers() {
         <Skeleton count={5} width={"65%"} />
       ) : (
         <ol className={styles.list}>
-          {organizers.length > 0 ? (
-            organizers.map((organizer) => (
+          {data.length > 0 ? (
+            data.map((organizer) => (
               <li key={`top-organizer-${organizer.id}`}>
                 <span className={styles.bold}>
                   {formatName(organizer.fullName)}

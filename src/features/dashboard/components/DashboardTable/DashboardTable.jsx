@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useSaveTraffic } from "../../hooks/mutations/useSaveTraffic";
@@ -16,6 +17,7 @@ import { useFilterStore } from "@stores/filterStore";
 
 export default function DashboardTable() {
   const { toggle } = useSidebar("filters");
+  const navigate = useNavigate();
   const filters = useFilterStore((state) => state.filters);
 
   const { save, isSaving } = useSaveTraffic();
@@ -30,10 +32,7 @@ export default function DashboardTable() {
     handleInputBlurOrEnter,
   } = useEditTable({ traffic, events, mutateFn: save });
 
-  const filterText = filters.filterLabel || "Все студенты";
-
   const tableContainer = useRef(null);
-
   const virtualizer = useVirtualizer({
     count: entities?.length,
     getScrollElement: () => tableContainer.current,
@@ -41,13 +40,29 @@ export default function DashboardTable() {
   });
   const vItems = virtualizer.getVirtualItems();
 
-  const headTable =
-    !filters.filterType || filters.filterType === "journal"
-      ? "ФИО"
-      : filters.filterType === "departments"
-      ? "Отделения"
-      : filters.filterType === "groupes"
-      ? "Группы"
+  const filterText = filters.filterLabel || "Все студенты";
+
+  const isStudents = !filters.filterType || filters.filterType === "journal";
+  const isDepartments = filters.filterType === "departments";
+  const isGroups = filters.filterType === "groupes";
+
+  const headTable = isStudents
+    ? "ФИО"
+    : isDepartments
+    ? "Отделения"
+    : isGroups
+    ? "Группы"
+    : null;
+
+  const filterSort =
+    filters.sort === "week"
+      ? "Неделя"
+      : filters.sort === "month"
+      ? "Месяц"
+      : filters.sort === "halfYear"
+      ? "Полугодие"
+      : filters.sort === "custom"
+      ? filters.customRange
       : null;
 
   if (error) {
@@ -62,6 +77,11 @@ export default function DashboardTable() {
           <div className={styles.block}>
             <p>{filterText}</p>
           </div>
+          {filterSort ? (
+            <div className={styles.block}>
+              <p>По времени: {filterSort}</p>
+            </div>
+          ) : null}
         </div>
         <div className={styles.button_section}>
           <button className={styles.button} onClick={toggle}>
@@ -69,7 +89,9 @@ export default function DashboardTable() {
           </button>
           <button
             className={styles.button}
-            // onClick={() => exportExcel({ entities, events, traffic })}
+            onClick={() =>
+              exportExcel({ entities, events, traffic, headTable })
+            }
           >
             Экспорт в Excel
           </button>
@@ -88,9 +110,10 @@ export default function DashboardTable() {
           >
             <thead>
               <tr key="header-row">
-                <th>{headTable}</th>
+                <th key="header-name">{headTable}</th>
                 {events?.map((event) => (
                   <th
+                    key={`header-event-${event.key}`}
                     className={
                       event.name.includes("Промежуточная аттестация")
                         ? styles.highlightedHeader
@@ -118,19 +141,58 @@ export default function DashboardTable() {
                       width: "100%",
                     }}
                   >
-                    <td
-                      className={`${styles.studentNameCell} ${
-                        filters.filterType === "" ? styles.clickable : ""
-                      }`}
-                      onClick={() => {}}
-                    >
-                      {!filters.filterType || filters.filterType === "journal"
-                        ? formatName(entity.name)
-                        : entity.name}
-                    </td>
+                    {isStudents ? (
+                      <td
+                        onClick={() => {
+                          navigate(`/student/profile/${entity.id}`);
+                        }}
+                        key={`body-${entity.id}`}
+                        className={styles.clickable_block}
+                      >
+                        {formatName(entity.name)}
+                      </td>
+                    ) : (
+                      <td key={`body-${entity.id}`}>{entity.name}</td>
+                    )}
+
                     {events.map((event) => (
-                      <td style={{ cursor: "pointer" }}>
-                        {traffic[entity.id][event.key]}
+                      <td
+                        style={{ cursor: isStudents ? "pointer" : "default" }}
+                        key={`body-traffic-${entity.id}-${event.key}`}
+                        onClick={
+                          isStudents
+                            ? () => {
+                                cellClick(
+                                  entity.id,
+                                  event.key,
+                                  localTraffic[entity.id]?.[event.key]
+                                );
+                              }
+                            : null
+                        }
+                      >
+                        {isStudents &&
+                        currentCell?.id === entity.id &&
+                        currentCell?.eventKey === event.key ? (
+                          <input
+                            name="editable_cell"
+                            type="text"
+                            value={cellValue}
+                            onChange={cellInputChange}
+                            onBlur={(e) =>
+                              handleInputBlurOrEnter(e, entity.id, event.key)
+                            }
+                            onKeyDown={(e) =>
+                              handleInputBlurOrEnter(e, entity.id, event.key)
+                            }
+                            autoFocus
+                            disabled={isSaving}
+                            className={styles.trafficInput}
+                            aria-label={`Редактировать посещаемость для ${entity.name} на событии ${event.name}`}
+                          />
+                        ) : (
+                          localTraffic[entity.id]?.[event.key]
+                        )}
                       </td>
                     ))}
                   </tr>
@@ -142,72 +204,14 @@ export default function DashboardTable() {
               <tr>
                 <th>Итого</th>
                 {events.map((event) => (
-                  <th>{getEventStats(event.key, traffic)}</th>
+                  <th key={`event-footer-${event.key}`}>
+                    {getEventStats(event.key, traffic)}
+                  </th>
                 ))}
               </tr>
             </tfoot>
           </table>
         </div>
-
-        //
-        //             {events.map((event) => (
-        //               <td
-        //                 key={`attendance-${student.id}-${event.key}`}
-        //                 onClick={() =>
-        //                   cellClick(
-        //                     student.id,
-        //                     event.key,
-        //                     localTraffic[student.id][event.key]
-        //                   )
-        //                 }
-        //                 style={{
-        //                   cursor: "pointer",
-        //                 }}
-        //                 className={
-        //                   event.name.includes("Промежуточная аттестация")
-        //                     ? styles.highlightedCell
-        //                     : ""
-        //                 }
-        //               >
-        //                 {currentCell?.studentId === student.id &&
-        //                 currentCell?.eventKey === event.key ? (
-        //                   <input
-        //                     name="editable_cell"
-        //                     type="text"
-        //                     value={cellValue}
-        //                     onChange={cellInputChange}
-        //                     onBlur={(e) =>
-        //                       handleInputBlurOrEnter(e, student.id, event.key)
-        //                     }
-        //                     onKeyDown={(e) =>
-        //                       handleInputBlurOrEnter(e, student.id, event.key)
-        //                     }
-        //                     autoFocus
-        //                     disabled={isSaving}
-        //                     className={styles.attendanceInput}
-        //                   />
-        //                 ) : (
-        //                   localTraffic[student.id][event.key]
-        //                 )}
-        //               </td>
-        //             ))}
-        //           </tr>
-        //         );
-        //       })}
-        //     </tbody>
-
-        //     <tfoot>
-        //       <tr>
-        //         <th>Итого</th>
-        //         {events?.map((event) => (
-        //           <th key={`event-footer-${event.key}`}>
-        //             {getEventStats(event.key, localTraffic)}
-        //           </th>
-        //         ))}
-        //       </tr>
-        //     </tfoot>
-        //   </table>
-        // </div>
       )}
       <FilterSidebar />
     </>
