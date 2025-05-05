@@ -6,6 +6,7 @@ import StudentProfilePage from "@features/profiles/student/pages/StudentProfileP
 import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import Dashboard from "@features/dashboard/pages/Dashboard";
 import NotFound from "@features/notFound/pages/NotFound";
+import EventEvaluation from "@features/eventsEvaluation/pages/EventEvaluation";
 
 export const routes = [
   {
@@ -25,6 +26,14 @@ export const routes = [
     element: (
       <ProtectedRoute>
         <Dashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/event-evaluation",
+    element: (
+      <ProtectedRoute>
+        <EventEvaluation />
       </ProtectedRoute>
     ),
   },

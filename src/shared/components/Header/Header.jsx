@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { queryClient } from "@configs/queryClientConfig";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { removeCookie } from "@utils/cookieUtils";
 import { formatName } from "@utils/formatUtils";
 import { useSetAuth } from "@stores/authStore";
 import styles from "./Header.module.css";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const userData = queryClient.getQueryData(["currentUser"]);
+  const location = useLocation();
 
   return (
     <header className={styles.header}>
@@ -19,11 +21,17 @@ const Header = () => {
           </Link>
           <div className={styles.nav_section}>
             <ul>
-              <li className={styles.active}>
+              <li className={location.pathname === "/" ? styles.active : null}>
                 <Link to="/">Основная таблица</Link>
               </li>
-              <li>
-                <Link to="/">Оценка мероприятия</Link>
+              <li
+                className={
+                  location.pathname === "/event-evaluation"
+                    ? styles.active
+                    : null
+                }
+              >
+                <Link to="/event-evaluation">Оценка мероприятия</Link>
               </li>
             </ul>
           </div>
@@ -61,6 +69,8 @@ export default Header;
 function DropdownItems() {
   const userData = queryClient.getQueryData(["currentUser"]);
   const setAuth = useSetAuth();
+  const { width } = useWindowSize();
+  const isMobile = width < 870;
 
   const handleLogout = () => {
     removeCookie("access_token");
@@ -75,9 +85,38 @@ function DropdownItems() {
           <Link to="/admin">Панель администратора</Link>
         </li>
       )}
+      {isMobile && (
+        <>
+          <li>
+            <Link to="/">Основная таблица</Link>
+          </li>
+          <li>
+            <Link to="/event-evaluation">Оценка мероприятия</Link>
+          </li>
+        </>
+      )}
       <li onClick={handleLogout} className={styles.logout}>
         Выйти
       </li>
     </>
   );
+}
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowSize;
 }

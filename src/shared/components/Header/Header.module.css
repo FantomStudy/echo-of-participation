@@ -81,3 +81,25 @@
 .logout {
   color: var(--danger-color);
 }
+@media (max-width: 870px) {
+  .nav_section {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  .logo_section h1 {
+    font-size: 16px;
+  }
+  .user_info h2 {
+    font-size: 14px;
+  }
+  .user_info p {
+    font-size: 12px;
+  }
+  .user_logo {
+    width: 40px;
+  }
+  .bell {
+    display: none;
+  }
+}
