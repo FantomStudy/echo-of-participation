@@ -150,14 +150,14 @@ export default function AdminProfilePage() {
 
             <Modal isShow={isShow} toggleClick={toggleShow}>
               <form
-                className={styles.modal_content_wrapper}
+                className={styles.modalContentWrapper}
                 onSubmit={handleAddEvent}
               >
-                <h2 className={styles.modal_title}>Добавление мероприятия</h2>
+                <h2 className={styles.modalTitle}>Добавление мероприятия</h2>
 
                 <input
                   type="text"
-                  className={styles.modal_input}
+                  className={styles.modalInput}
                   placeholder="Название мероприятия"
                   onChange={(e) => handleDataChange(e.target.value, "name")}
                 />
@@ -168,15 +168,15 @@ export default function AdminProfilePage() {
                   onChange={(date) => handleDataChange(date, "date")}
                   dateFormat="dd.MM.yyyy"
                   locale={ru}
-                  className={styles.date_picker}
-                  wrapperClassName={styles.date_picker_wrapper}
+                  className={styles.datePicker}
+                  wrapperClassName={styles.datePickerWrapper}
                   showPopperArrow={false}
                 />
                 <select
                   name="organizer"
                   id="organizer"
                   value={newEvent.organizerId}
-                  className={styles.modal_select}
+                  className={styles.modalSelect}
                   onChange={(e) => {
                     handleDataChange(e.target.value, "organizerId");
                   }}
@@ -192,13 +192,13 @@ export default function AdminProfilePage() {
                       ))
                     : null}
                 </select>
-                <span style={{ color: "red" }}>
+                <span className={styles.error}>
                   {localError ? localError : null}
                 </span>
                 <button
                   type="submit"
                   disabled={isAddingEvent}
-                  className={styles.add_event_btn}
+                  className={styles.button}
                 >
                   {isAddingEvent ? "Добавляем.." : "Добавить мероприятие"}
                 </button>
