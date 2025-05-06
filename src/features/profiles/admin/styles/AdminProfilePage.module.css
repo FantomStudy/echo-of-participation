@@ -15,7 +15,7 @@
 .profileWrapper {
   display: flex;
   justify-content: space-between;
-  grid-gap: 30px;
+  grid-gap: 20px;
 }
 
 .entityWrapper {
@@ -35,7 +35,7 @@
 
 .entityWrapper h2 {
   font-weight: 500;
-  font-size: clamp(18px, 3vw, 20px);
+  font-size: clamp(18px, 2vw, 20px);
 }
 
 .entityInfo {
@@ -46,12 +46,12 @@
 
 .blockInfo h3 {
   font-weight: 500;
-  font-size: clamp(16px, 2.5vw, 18px);
+  font-size: clamp(16px, 1.8vw, 18px);
 }
 
 .blockInfo p {
   font-weight: 400;
-  font-size: clamp(14px, 2.2vw, 16px);
+  font-size: clamp(14px, 1.6vw, 16px);
 }
 
 .button {
@@ -65,7 +65,7 @@
   padding: 10px 20px;
   border-radius: 10px;
   font-weight: 500;
-  font-size: clamp(14px, 2.2vw, 16px);
+  font-size: clamp(14px, 1.6vw, 16px);
   transition: 0.3s ease-in-out;
 }
 .button:hover {
@@ -143,51 +143,14 @@
   align-items: center;
   gap: 30px;
 }
-/*  
-.addEventForm {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.9375rem;
+
+.datePickerWrapper {
+  width: 100%;
 }
 
-.eventInput {
-  flex: 1;
-  padding: 0.375rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-}
-
-
-
-
-.loading {
-  text-align: center;
-  padding: 0.9375rem;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-}
-
-.error {
-  text-align: center;
-  padding: 0.9375rem;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-  color: var(--danger-color);
-}
-
-.actionsSection {
-  margin-top: 0.9375rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.9375rem;
-  align-items: center;
-}
-
-
-
-.modal_input,
-.date_picker,
-.modal_select {
+.modalInput,
+.datePicker,
+.modalSelect {
   width: 100%;
   box-sizing: border-box;
   border: none;
@@ -196,12 +159,7 @@
   padding: 0.625rem 0.9375rem;
   background-color: #f1f2f6;
 }
-
-.date_picker_wrapper {
-  width: 100%;
-}
-
-.modal_select {
+.modalSelect {
   padding-right: 2.5rem;
   appearance: none;
   -webkit-appearance: none;
@@ -213,20 +171,51 @@
   cursor: pointer;
 }
 
-.modal_input:focus,
-.date_picker:focus {
+.modalInput:focus,
+.datePicker:focus {
   outline: #0069ff 1px solid;
 }
 
-.modal_title {
+.modalTitle {
   font-weight: 600;
   font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   line-height: 150%;
   text-align: center;
   color: #0069ff;
-} */
+}
 
-/* @media (max-width: 1024px) {
+.error {
+  text-align: center;
+  font-size: clamp(14px, 2.2vw, 16px);
+  color: var(--danger-color);
+}
+
+@media (max-width: 1024px) {
+  .profileContainer {
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .profileWrapper {
+    flex-direction: column;
+    max-width: 80%;
+  }
+}
+@media (max-width: 500px) {
+  .profileWrapper {
+    min-width: 100%;
+  }
+  .tableBlockHeader {
+    flex-wrap: wrap;
+    grid-gap: 5px;
+  }
+  .tableBlockHeader .button {
+    padding: 10px 15px;
+  }
+  .tableBlockHeader h2 {
+    font-size: clamp(16px, 4vw, 18px);
+  }
+}
+/* @media () {
   .profileContainer {
     max-width: none;
   }
