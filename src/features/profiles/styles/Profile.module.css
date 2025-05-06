@@ -29,9 +29,6 @@
   grid-gap: 30px;
   box-sizing: border-box;
 }
-/* .entityWrapper {
-  width: auto;
-} */
 
 .entityWrapper h2 {
   font-weight: 500;
@@ -116,6 +113,7 @@
 
 .table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 .table tbody tr:nth-child(odd) {
@@ -125,16 +123,29 @@
   background-color: var(--table-alternate-color);
 }
 
+.table td {
+  text-align: center;
+}
+
 .table td:first-child {
   padding: 10px;
   padding-left: 20px;
   font-size: clamp(14px, 2.2vw, 16px);
+  text-align: left;
 }
 
 .table tbody td:last-child {
   padding-right: 20px;
 }
 
+.table th {
+  padding: 10px;
+  font-weight: 400;
+}
+
+.notFound {
+  padding: 0 20px 10px;
+}
 /* МОДАЛЬНЫЕ СТИЛИ */
 .modalContentWrapper {
   height: 100%;
@@ -197,6 +208,7 @@
   }
   .profileWrapper {
     flex-direction: column;
+    width: 100%;
     max-width: 80%;
   }
 }
@@ -215,122 +227,3 @@
     font-size: clamp(16px, 4vw, 18px);
   }
 }
-/* @media () {
-  .profileContainer {
-    max-width: none;
-  }
-  .profileContainer h1 {
-    font-size: clamp(1.25rem, 4vw, 1.5rem);
-  }
-
-  .profileWrapper {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  .info_wrapper {
-    order: -1;
-    width: 100%;
-    max-width: 37.5rem;
-    padding: 1rem;
-    margin: 0 auto;
-  }
-  .add_event_btn {
-    padding: 10px;
-  }
-  .event_table {
-    width: 100%;
-    max-width: 37.5rem;
-    padding: 1rem;
-    margin: 0 auto;
-  }
-
-  .addEventForm {
-    flex-wrap: wrap;
-    gap: 0.625rem;
-  }
-
-  .eventInput,
-  .datePicker {
-    width: 100%;
-  }
-
-  .actionsSection {
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-} */
-
-/* @media (max-width: 768px) {
-  .container {
-    padding: 0.5rem;
-  }
-
-  .info_wrapper h2,
-  .create_event h2 {
-    font-size: clamp(1rem, 2.8vw, 1.125rem);
-  }
-
-  .info_wrapper,
-  .event_table {
-    padding: 0.625rem;
-    margin: 0 auto;
-  }
-  .add_event_btn {
-    max-width: 150px;
-    padding: 10px;
-    font-size: 12px;
-  }
-  .addEventForm {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .eventInput,
-  .datePicker {
-    width: 100%;
-  }
-
-  .eventItem {
-    align-items: flex-start;
-    gap: 0.3125rem;
-  }
-
-  .actionsSection {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  span {
-    max-width: 290px;
-  }
-
-  .deleteButton {
-    width: 60px;
-  }
-} */
-
-/* @media (max-width: 480px) {
-  .profileContainer h1 {
-    font-size: clamp(1rem, 3.5vw, 1.25rem);
-  }
-
-  .info_wrapper h2,
-  .create_event h2 {
-    font-size: clamp(0.875rem, 2.5vw, 1rem);
-  }
-
-  .blockInfo h3,
-  .blockInfo p,
-  .eventItem,
-  .eventInput,
-  .datePicker {
-    font-size: clamp(0.75rem, 2.2vw, 0.875rem);
-  }
-
-  .modal_title {
-    font-size: clamp(1rem, 3vw, 1.25rem);
-  }
-} */

@@ -12,11 +12,11 @@ import { formatName } from "@utils/formatUtils";
 import { format } from "date-fns";
 import ru from "date-fns/locale/ru";
 
+import styles from "../../styles/Profile.module.css";
 import { useAddEvent } from "../hooks/mutations/useAddEvent";
 import { useDeleteEvent } from "../hooks/mutations/useDeleteEvent";
 import { useEvents } from "../hooks/queries/useEvents";
 import { useUsers } from "../hooks/queries/useUsers";
-import styles from "../styles/AdminProfilePage.module.css";
 
 export default function AdminProfilePage() {
   const currentUser = queryClient.getQueryData(["currentUser"]);
@@ -214,9 +214,7 @@ export default function AdminProfilePage() {
                       .reverse()
                       .map((event) => (
                         <tr key={event.id}>
-                          <td className={styles.eventItem}>
-                            {event.eventName}
-                          </td>
+                          <td>{event.eventName}</td>
                           <td className={styles.buttonCell}>
                             <button
                               onClick={() => deleteEvent(event.id)}
@@ -231,7 +229,7 @@ export default function AdminProfilePage() {
                 </table>
               </div>
             ) : (
-              <p>Мероприятия не найдены</p>
+              <p className={styles.notFound}>Мероприятия не найдены</p>
             )}
           </div>
         </div>

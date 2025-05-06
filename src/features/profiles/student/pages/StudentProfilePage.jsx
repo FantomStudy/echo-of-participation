@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { format, subWeeks, subMonths } from "date-fns";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import ru from "date-fns/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import Loader from "@components/Loader/Loader";
+import { format, subMonths, subWeeks } from "date-fns";
+import ru from "date-fns/locale/ru";
+
 import { useStudent } from "../hooks/business/query/useStudent";
 import styles from "../styles/StudentProfilePage.module.css";
 
@@ -73,7 +75,7 @@ const StudentProfilePage = () => {
     if (newSort === "custom" && startDate && endDate) {
       const customSortValue = `${format(startDate, "dd.MM.yyyy")}-${format(
         endDate,
-        "dd.MM.yyyy"
+        "dd.MM.yyyy",
       )}`;
       queryParams.set("customSort", customSortValue);
     } else if (newSort !== "custom") {
@@ -83,7 +85,7 @@ const StudentProfilePage = () => {
     window.history.pushState(
       {},
       "",
-      `${location.pathname}?${queryParams.toString()}`
+      `${location.pathname}?${queryParams.toString()}`,
     );
     setSort(newSort);
   };
@@ -97,18 +99,16 @@ const StudentProfilePage = () => {
       queryParams.set("sort", "custom");
       const customSortValue = `${format(start, "dd.MM.yyyy")}-${format(
         end,
-        "dd.MM.yyyy"
+        "dd.MM.yyyy",
       )}`;
       queryParams.set("customSort", customSortValue);
       window.history.pushState(
         {},
         "",
-        `${location.pathname}?${queryParams.toString()}`
+        `${location.pathname}?${queryParams.toString()}`,
       );
     }
   };
-
-
 
   if (isLoading) {
     return <Loader />;
@@ -121,7 +121,7 @@ const StudentProfilePage = () => {
   const filteredEvents = filterEventsBySort(data.events);
 
   return (
-    <div className='container'>
+    <div className="container">
       <div className={styles.profileContainer}>
         <h1>Личный кабинет студента</h1>
 
@@ -213,12 +213,11 @@ const StudentProfilePage = () => {
                       <td>
                         <strong>Итого</strong>
                       </td>
-                      <td></td>
                       <td>
                         <strong>
                           {filteredEvents.reduce(
                             (sum, event) => sum + event.point,
-                            0
+                            0,
                           )}
                         </strong>
                       </td>

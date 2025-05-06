@@ -23,11 +23,8 @@
   font-size: clamp(0.875rem, 2.5vw, 1rem);
   position: relative;
   border-collapse: collapse;
-  table-layout: fixed;
 }
-/* .table tr {
-  display: flex;
-} */
+
 .table thead {
   background-color: #fff;
   position: sticky;
