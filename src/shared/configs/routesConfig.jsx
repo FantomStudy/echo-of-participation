@@ -8,6 +8,7 @@ import NotFound from "@features/notFound/pages/NotFound";
 import AddUserPage from "@features/profiles/admin/pages/AddUserPage";
 import AdminProfilePage from "@features/profiles/admin/pages/AdminProfilePage";
 import StudentProfilePage from "@features/profiles/student/pages/StudentProfilePage";
+import UserProfile from "@features/profiles/user/pages/UserProfile";
 
 export const routes = [
   {
@@ -43,6 +44,14 @@ export const routes = [
     element: (
       <ProtectedRoute>
         <StudentProfilePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/user/profile/:userId",
+    element: (
+      <ProtectedRoute>
+        <UserProfile />
       </ProtectedRoute>
     ),
   },

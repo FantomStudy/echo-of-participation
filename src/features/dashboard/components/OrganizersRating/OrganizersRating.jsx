@@ -1,5 +1,6 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Link } from "react-router-dom";
 
 import { formatName } from "@utils/formatUtils";
 
@@ -29,9 +30,12 @@ const OrganizersRating = () => {
           {data.length > 0 ? (
             data.map((organizer) => (
               <li key={`top-organizer-${organizer.id}`}>
-                <span className={styles.bold}>
+                <Link
+                  className={styles.boldLink}
+                  to={`/user/profile/${organizer.id}`}
+                >
                   {formatName(organizer.fullName)}
-                </span>{" "}
+                </Link>{" "}
                 - {organizer.eventCount} {declineWord(organizer.eventCount)}
               </li>
             ))

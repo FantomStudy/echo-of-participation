@@ -19,7 +19,9 @@
   margin: 0;
 }
 
-.bold {
+.boldLink {
+  color: #000;
+  text-decoration: none;
   font-weight: 500;
 }
 

@@ -7,7 +7,7 @@ export const fetchCurrentUser = async () => {
     throw new Error("Не удалось найти токен");
   }
 
-  const response = await api.post(`/user/profile`, {
+  const response = await api.post(`/user/adminProfile`, {
     access_token: accessToken,
   });
 

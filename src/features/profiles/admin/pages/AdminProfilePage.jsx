@@ -75,7 +75,7 @@ export default function AdminProfilePage() {
 
   if (eventsLoading || usersLoading) {
     return (
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.profileContainer}>
           <Skeleton height={40} width="50%" style={{ marginBottom: "20px" }} />
           <div className={styles.admins_tables}>
@@ -213,8 +213,8 @@ export default function AdminProfilePage() {
                       .slice()
                       .reverse()
                       .map((event) => (
-                        <tr>
-                          <td key={event.id} className={styles.eventItem}>
+                        <tr key={event.id}>
+                          <td className={styles.eventItem}>
                             {event.eventName}
                           </td>
                           <td className={styles.buttonCell}>
@@ -227,7 +227,6 @@ export default function AdminProfilePage() {
                           </td>
                         </tr>
                       ))}
-                    <td></td>
                   </tbody>
                 </table>
               </div>
