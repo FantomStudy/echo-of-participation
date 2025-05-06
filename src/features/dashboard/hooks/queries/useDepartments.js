@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchDepartments } from "@dashboard/api/dashboardApi";
 import { useCheckAuth } from "@stores/authStore";
+import { useQuery } from "@tanstack/react-query";
+
+import { fetchDepartments } from "../../api/dashboardApi";
 
 export const useDepartments = () => {
   const isAuth = useCheckAuth();

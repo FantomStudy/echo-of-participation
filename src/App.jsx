@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useCurrentUser } from "@hooks/business/queries/useCurrentUser";
-import { routes } from "@configs/routesConfig";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import Layout from "@components/Layout/Layout";
 import Loader from "@components/Loader/Loader";
+import { routes } from "@configs/routesConfig";
+import { useCurrentUser } from "@hooks/business/queries/useCurrentUser";
+
 import "./App.css";
 
 export default function App() {

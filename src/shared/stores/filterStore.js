@@ -27,6 +27,6 @@ export const useFilterStore = create(
     }),
     {
       name: "filter-storage",
-    }
-  )
+    },
+  ),
 );

@@ -1,4 +1,4 @@
-import styles from "@dashboard/styles/FilterSidebar.module.css";
+import styles from "../../styles/FilterSidebar.module.css";
 
 const CourseSelect = ({ value, handleFilterChange }) => {
   return (

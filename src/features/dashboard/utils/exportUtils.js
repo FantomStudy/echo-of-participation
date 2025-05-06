@@ -16,7 +16,7 @@ export const exportExcel = ({ entities, events, traffic, headTable }) => {
   const objectMaxLength = (obj, key) =>
     Math.max(
       key.length,
-      ...data.map((row) => (row[key] ? row[key].toString().length : 0))
+      ...data.map((row) => (row[key] ? row[key].toString().length : 0)),
     );
 
   const cols = Object.keys(data[0] || {}).map((key) => {

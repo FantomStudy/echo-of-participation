@@ -1,14 +1,14 @@
 import { queryClient } from "@configs/queryClientConfig";
 import { useMutation } from "@tanstack/react-query";
 
-import { saveTraffic } from "../../api/tableApi";
+import { saveJournal } from "../../api/evenEvaluationApi";
 
-export const useSaveTraffic = () => {
+export const useSaveTable = () => {
   const { mutate, isPending } = useMutation({
-    mutationFn: (dataToSave) => saveTraffic(dataToSave),
+    mutationFn: (dataToSave) => saveJournal(dataToSave),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ["activityRating"] });
-      console.log("Данные успешно сохранены");
+      await queryClient.refetchQueries({ queryKey: ["eventsForRate"] });
+      console.log("Оценка успешно сохранена");
     },
     onError: (error) => {
       console.error("Ошибка при сохранении данных:", error);

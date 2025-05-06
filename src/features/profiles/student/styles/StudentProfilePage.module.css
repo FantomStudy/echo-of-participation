@@ -1,8 +1,8 @@
-.container {
+/* .container {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
-  position: relative; /* Добавлено для позиционирования кнопки */
+  position: relative;
 }
 
 .backButton {
@@ -108,7 +108,6 @@
   text-align: center;
 }
 
-/* Стили для календаря */
 .react-datepicker {
   font-family: Arial, sans-serif;
   border: 1px solid #ccc;
@@ -128,4 +127,4 @@
 
 .react-datepicker__day--in-selecting-range {
   background-color: #cce5ff;
-}
+} */

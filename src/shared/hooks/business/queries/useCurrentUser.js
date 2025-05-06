@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@api/currentUserApi";
 import { useCheckAuth } from "@stores/authStore";
+import { useQuery } from "@tanstack/react-query";
 
 export const useCurrentUser = () => {
   const isAuth = useCheckAuth();

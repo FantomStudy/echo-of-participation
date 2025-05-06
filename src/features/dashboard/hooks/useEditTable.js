@@ -1,12 +1,27 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { debounce } from "es-toolkit";
 
 export const useEditTable = ({ traffic, events, mutateFn }) => {
   const [localTraffic, setLocalTraffic] = useState({ ...traffic });
   const [currentCell, setCurrentCell] = useState(null);
   const [cellValue, setCellValue] = useState("");
+  const [pendingChanges, setPendingChanges] = useState([]);
 
-  useEffect(() => setLocalTraffic({ ...traffic }), [traffic]);
+  useEffect(() => {
+    setLocalTraffic({ ...traffic });
+  }, [traffic]);
 
+  const debouncedSave = useMemo(
+    () =>
+      debounce((changes) => {
+        if (changes.length > 0) {
+          mutateFn(changes);
+          setPendingChanges([]);
+        }
+      }, 5000),
+    [mutateFn],
+  );
   const cellClick = useCallback((id, eventKey, value) => {
     setCurrentCell({ id, eventKey });
     setCellValue(value.toString() || "");
@@ -36,7 +51,6 @@ export const useEditTable = ({ traffic, events, mutateFn }) => {
         events: events.map((event) => {
           const parts = event.name.split(" ");
           parts.pop();
-
           return {
             name: parts.join(" "),
             point: parseInt(updatedTraffic[id][event.key] || "0") || 0,
@@ -44,36 +58,60 @@ export const useEditTable = ({ traffic, events, mutateFn }) => {
         }),
       };
 
-      mutateFn(dataToSave);
-      setCurrentCell(null);
+      setPendingChanges((prev) => {
+        const existingChange = prev.find((change) => change.studentId === id);
+        let newChanges;
+        if (existingChange) {
+          newChanges = prev.map((change) =>
+            change.studentId === id ? dataToSave : change,
+          );
+        } else {
+          newChanges = [...prev, dataToSave];
+        }
+
+        debouncedSave(newChanges);
+        return newChanges;
+      });
     },
-    [localTraffic, events, mutateFn]
+    [localTraffic, events, debouncedSave],
   );
 
-  //TODO ВОЗМОЖНО УЛУЧШИТЬ ИЛИ ПОМЕНЯТЬ ВВОД
   const handleInputBlurOrEnter = useCallback(
     (e, id, eventKey) => {
-      if (e.type === "blur") {
+      if (e.type === "blur" || (e.type === "keydown" && e.key === "Enter")) {
+        if (cellValue === "0" || cellValue === "1") {
+          handleSave(id, eventKey, cellValue);
+        }
         setCurrentCell(null);
-      }
-      if (e.type === "keydown") {
+      } else if (e.type === "keydown") {
         const { key } = e;
-
         if (key === "1" || key === "0") {
           setCellValue(key);
           handleSave(id, eventKey, key);
         } else if (
           key !== "Backspace" &&
           key !== "ArrowLeft" &&
-          key !== "ArrowRight"
+          key !== "ArrowRight" &&
+          key !== "Enter"
         ) {
-          setCurrentCell(null);
           e.preventDefault();
         }
       }
     },
-    [handleSave]
+    [cellValue, handleSave],
   );
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (pendingChanges.length > 0) {
+        e.preventDefault();
+        mutateFn(pendingChanges);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [pendingChanges, mutateFn, currentCell]);
 
   return {
     localTraffic,

@@ -1,12 +1,14 @@
 import { useState } from "react";
+
 import Sidebar from "@components/Sidebar/Sidebar";
-import { useSidebar } from "@stores/sidebarStore";
 import { useFilterStore } from "@stores/filterStore";
-import TimeRange from "./inputs/TimeRange";
-import GroupBox from "./inputs/GroupBox";
-import DepartmentSelect from "./inputs/DepartmentSelect";
-import CourseSelect from "./inputs/CourseSelect";
+import { useSidebar } from "@stores/sidebarStore";
+
 import styles from "../../styles/FilterSidebar.module.css";
+import CourseSelect from "./CourseSelect";
+import DepartmentSelect from "./DepartmentSelect";
+import GroupBox from "./GroupBox";
+import TimeRange from "./TimeRange";
 
 const FilterSidebar = () => {
   const { setFilters, resetFilters } = useFilterStore();
@@ -73,10 +75,10 @@ const FilterSidebar = () => {
       filterState.filterType === "groupes"
         ? filterState.depId
         : filterState.filterType === "journal"
-        ? filterState.groupId
-        : filterState.filterType === "course"
-        ? filterState.courseId
-        : null;
+          ? filterState.groupId
+          : filterState.filterType === "course"
+            ? filterState.courseId
+            : null;
 
     setFilters({
       filterType: filterState.filterType,

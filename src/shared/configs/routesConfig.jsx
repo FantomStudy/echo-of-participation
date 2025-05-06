@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
-import Login from "@auth/pages/Login";
+
+import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
+import Login from "@features/auth/pages/Login";
+import Dashboard from "@features/dashboard/pages/Dashboard";
+import EventEvaluation from "@features/eventsEvaluation/pages/EventEvaluation";
+import NotFound from "@features/notFound/pages/NotFound";
 import AddUserPage from "@features/profiles/admin/pages/AddUserPage";
 import AdminProfilePage from "@features/profiles/admin/pages/AdminProfilePage";
 import StudentProfilePage from "@features/profiles/student/pages/StudentProfilePage";
-import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
-import Dashboard from "@features/dashboard/pages/Dashboard";
-import NotFound from "@features/notFound/pages/NotFound";
-import EventEvaluation from "@features/eventsEvaluation/pages/EventEvaluation";
 
 export const routes = [
   {
@@ -48,9 +49,9 @@ export const routes = [
   {
     path: "/admin",
     element: (
-      // <ProtectedRoute requiredRole="Администратор">
-      <AdminProfilePage />
-      // </ProtectedRoute>
+      <ProtectedRoute requiredRole="Администратор">
+        <AdminProfilePage />
+      </ProtectedRoute>
     ),
   },
   {

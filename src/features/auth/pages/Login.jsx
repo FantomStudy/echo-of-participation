@@ -1,6 +1,7 @@
 import { useActionState } from "react";
-import { useLoginUser } from "@auth/hooks/mutations/useLoginUser";
-import styles from "@auth/styles/LoginPage.module.css";
+
+import { useLoginUser } from "@features/auth/hooks/useLoginUser";
+import styles from "@features/auth/styles/Login.module.css";
 
 export default function Login() {
   const { login, isPending } = useLoginUser();
@@ -9,6 +10,7 @@ export default function Login() {
     data: null,
     error: null,
   });
+
   async function handleLogin(prevState, formData) {
     const credentials = {
       login: formData.get("login"),

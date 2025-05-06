@@ -1,12 +1,14 @@
 import { useState } from "react";
+
 import {
   Combobox,
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { useGroups } from "@dashboard/hooks/queries/useGroups";
-import styles from "@dashboard/styles/FilterSidebar.module.css";
+
+import { useGroups } from "../../hooks/queries/useGroups";
+import styles from "../../styles/FilterSidebar.module.css";
 
 const GroupBox = ({ selectedGroup, setSelectedGroup, handleFilterChange }) => {
   const [query, setQuery] = useState("");
@@ -18,7 +20,7 @@ const GroupBox = ({ selectedGroup, setSelectedGroup, handleFilterChange }) => {
     query === ""
       ? groupsList
       : groupsList.filter((group) =>
-          group.groupeName.toLowerCase().includes(query.toLowerCase())
+          group.groupeName.toLowerCase().includes(query.toLowerCase()),
         );
 
   const handleComboboxChange = (group) => {

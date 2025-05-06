@@ -1,98 +1,23 @@
-import Loader from "@/shared/components/Loader/Loader";
-import { useEventsForRate } from "../hooks/business/queries/useEventsForRate";
+import Loader from "@components/Loader/Loader";
+import { queryClient } from "@configs/queryClientConfig";
+
+import { useSaveTable } from "../hooks/mutations/useSaveTable";
+import { useEventsForRate } from "../hooks/queries/useEventsForRate";
+import { useEditTable } from "../hooks/useEditTable";
 import styles from "../styles/EventEvaluation.module.css";
-import { queryClient } from "@/shared/configs/queryClientConfig";
-import { useEffect, useState } from "react";
-import api from "@/shared/configs/axiosConfig";
 
 const EventEvaluation = () => {
   const { data, isLoading } = useEventsForRate();
   const userData = queryClient.getQueryData(["currentUser"]);
 
-  const [eventRating, setEventRating] = useState(data);
-  const [error, setError] = useState(null);
+  const { save } = useSaveTable();
 
-  useEffect(() => setEventRating(data), [data]);
-
-  const getMaxRatingByRole = (roleName) => {
-    switch (roleName) {
-      case "Администратор":
-        return 1;
-      case "Директор":
-        return 1;
-      case "Зам. директора":
-        return 0.8;
-      case "Преподаватель":
-        return 0.6;
-      default:
-        return 0;
-    }
-  };
-  const maxRating = getMaxRatingByRole(userData.roleName);
-
-  const handleRatingChange = (index, value) => {
-    setEventRating((prev) =>
-      prev.map((event, i) =>
-        i === index ? { ...event, rating: value } : event
-      )
-    );
-  };
-
-  const saveEventRating = async (eventId, point) => {
-    // Нормализуем ввод: заменяем запятую на точку
-    const normalizedPoint = point.replace(",", ".");
-    const parsedPoint =
-      normalizedPoint === "" ? null : parseFloat(normalizedPoint);
-
-    if (parsedPoint !== null && (isNaN(parsedPoint) || parsedPoint < 0)) {
-      setEventRating((prev) =>
-        prev.map((item) =>
-          item.id === eventId ? { ...item, rating: null } : item
-        )
-      );
-      setError(`Оценка должна быть числом от 0 до ${maxRating}`);
-      setTimeout(() => setError(null), 5000);
-      return;
-    }
-
-    if (parsedPoint !== null && parsedPoint > maxRating) {
-      setEventRating((prev) =>
-        prev.map((item) =>
-          item.eventId === eventId ? { ...item, rating: null } : item
-        )
-      );
-      setError(
-        `Оценка не может превышать ${maxRating} для вашей роли (${userData.roleName})`
-      );
-      setTimeout(() => setError(null), 5000);
-      return;
-    }
-
-    try {
-      const ratingData = [
-        {
-          eventId,
-          userId: userData.id,
-          point: parsedPoint,
-        },
-      ];
-
-      const response = await api.post("/event-rating/saveJournal", ratingData);
-
-      console.log("Оценка успешно сохранена");
-
-      queryClient.refetchQueries({ queryKey: ["eventsForRate"] });
-    } catch (error) {
-      console.error("Ошибка при сохранении рейтинга:", error);
-      setEventRating((prev) =>
-        prev.map((item) =>
-          item.eventId === eventId ? { ...item, rating: null } : item
-        )
-      );
-      setError("Не удалось сохранить оценку");
-      setTimeout(() => setError(null), 5000);
-    }
-  };
+  const { maxRating, localEvents, saveEventRating, handleRatingChange } =
+    useEditTable({
+      userData,
+      events: data,
+      mutateFn: save,
+    });
 
   if (isLoading) {
     return <Loader />;
@@ -116,7 +41,7 @@ const EventEvaluation = () => {
               </tr>
             </thead>
             <tbody>
-              {eventRating?.map((event, index) => (
+              {localEvents?.map((event, index) => (
                 <tr>
                   <td>{event.name}</td>
                   <td>{event.date}</td>

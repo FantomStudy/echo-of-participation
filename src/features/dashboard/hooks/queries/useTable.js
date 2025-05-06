@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchTableData } from "@dashboard/api/tableApi";
 import { useCheckAuth } from "@stores/authStore";
 import { useFilterStore } from "@stores/filterStore";
+import { useQuery } from "@tanstack/react-query";
 
-export const useDashboardTable = () => {
+import { fetchTableData } from "../../api/tableApi";
+
+export const useTable = () => {
   const isAuth = useCheckAuth();
   const filters = useFilterStore((state) => state.filters);
 

@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
 
@@ -85,23 +86,23 @@ export const useSidebar = (id) => {
   const { isShow, data } = sidebar;
   const toggle = useCallback(
     () => useSidebarStore.getState().toggleShow(id),
-    [id]
+    [id],
   );
   const open = useCallback(
     () => useSidebarStore.getState().setIsShow(id, true),
-    [id]
+    [id],
   );
   const close = useCallback(
     () => useSidebarStore.getState().setIsShow(id, false),
-    [id]
+    [id],
   );
   const setData = useCallback(
     (data) => useSidebarStore.getState().setData(id, data),
-    [id]
+    [id],
   );
   const resetData = useCallback(
     () => useSidebarStore.getState().resetData(id),
-    [id]
+    [id],
   );
 
   return { isShow, data, toggle, open, close, setData, resetData };

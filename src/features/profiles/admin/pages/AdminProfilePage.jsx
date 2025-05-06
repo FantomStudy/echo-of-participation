@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import ru from "date-fns/locale/ru";
-import { format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { Link } from "react-router-dom";
+
+import Modal from "@components/Modal/Modal";
 import { queryClient } from "@configs/queryClientConfig";
+import { useShowUI } from "@hooks/ui/useShowUI";
 import { formatName } from "@utils/formatUtils";
-import { useUsers } from "../hooks/queries/useUsers";
-import { useEvents } from "../hooks/queries/useEvents";
+import { format } from "date-fns";
+import ru from "date-fns/locale/ru";
+
 import { useAddEvent } from "../hooks/mutations/useAddEvent";
 import { useDeleteEvent } from "../hooks/mutations/useDeleteEvent";
-import Modal from "@components/Modal/Modal";
-import { useShowUI } from "@hooks/ui/useShowUI";
-import Skeleton from "react-loading-skeleton";
+import { useEvents } from "../hooks/queries/useEvents";
+import { useUsers } from "../hooks/queries/useUsers";
 import styles from "../styles/AdminProfilePage.module.css";
-import "react-datepicker/dist/react-datepicker.css";
-import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AdminProfilePage() {
   const currentUser = queryClient.getQueryData(["currentUser"]);
@@ -53,7 +55,7 @@ export default function AdminProfilePage() {
       const formattedDate = format(
         newEvent.date,
         "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        { timeZone: "UTC" }
+        { timeZone: "UTC" },
       );
 
       addEvent({
@@ -106,14 +108,14 @@ export default function AdminProfilePage() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <div className={styles.profileContainer}>
         <h1>Личный кабинет администратора</h1>
 
-        <div className={styles.admins_tables}>
-          <div className={styles.info_wrapper}>
+        <div className={styles.profileWrapper}>
+          <div className={styles.entityWrapper}>
             <h2>Информация о пользователе</h2>
-            <div className={styles.tralalero}>
+            <div className={styles.entityInfo}>
               {currentUser ? (
                 <>
                   <div className={styles.blockInfo}>
@@ -133,15 +135,15 @@ export default function AdminProfilePage() {
                 <Skeleton count={3} height={60} style={{ margin: "10px 0" }} />
               )}
             </div>
-            <Link to="/admin/add-user" className={styles.add_event_btn}>
+            <Link to="/admin/add-user" className={styles.button}>
               Добавить пользователя
             </Link>
           </div>
 
-          <div className={styles.event_table}>
-            <div className={styles.create_event}>
+          <div className={styles.tableBlock}>
+            <div className={styles.tableBlockHeader}>
               <h2>Мероприятия</h2>
-              <button className={styles.add_event_btn} onClick={toggleShow}>
+              <button className={styles.button} onClick={toggleShow}>
                 Добавить мероприятие
               </button>
             </div>
@@ -204,22 +206,31 @@ export default function AdminProfilePage() {
             </Modal>
 
             {events.length > 0 ? (
-              <ul className={styles.eventsList}>
-                {events
-                  .slice()
-                  .reverse()
-                  .map((event) => (
-                    <li key={event.id} className={styles.eventItem}>
-                      <span>{event.eventName}</span>
-                      <button
-                        onClick={() => deleteEvent(event.id)}
-                        className={styles.deleteButton}
-                      >
-                        Удалить
-                      </button>
-                    </li>
-                  ))}
-              </ul>
+              <div className={styles.tableContainer}>
+                <table className={styles.table}>
+                  <tbody>
+                    {events
+                      .slice()
+                      .reverse()
+                      .map((event) => (
+                        <tr>
+                          <td key={event.id} className={styles.eventItem}>
+                            {event.eventName}
+                          </td>
+                          <td className={styles.buttonCell}>
+                            <button
+                              onClick={() => deleteEvent(event.id)}
+                              className={`${styles.button} ${styles.delete}`}
+                            >
+                              Удалить
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    <td></td>
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <p>Мероприятия не найдены</p>
             )}

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import { ru } from "date-fns/locale/ru";
-import styles from "@dashboard/styles/FilterSidebar.module.css";
 import "react-datepicker/dist/react-datepicker.css";
+
+import { ru } from "date-fns/locale/ru";
+
+import styles from "../../styles/FilterSidebar.module.css";
 
 const TimeRange = ({ value, filterType, setFilterState }) => {
   const [error, setError] = useState("");

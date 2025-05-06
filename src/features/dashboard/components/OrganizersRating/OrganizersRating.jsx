@@ -1,20 +1,26 @@
-import { useOrganizersRating } from "../../hooks/queries/useOrganizersRating";
-import { formatName } from "@/shared/utils/formatUtils";
-import styles from "../../styles/Top.module.css";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export default function OrganizersRating() {
+import { formatName } from "@utils/formatUtils";
+
+import { useOrganizersRating } from "../../hooks/queries/useOrganizersRating";
+import styles from "../../styles/Top.module.css";
+
+const OrganizersRating = () => {
   const { data, error, isLoading } = useOrganizersRating();
 
   if (error) {
-    return <>Error</>;
+    return <>Не удалось загрузить необходимые данные... </>;
   }
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
-        {isLoading ? <Skeleton width={"85%"} /> : "Список лучших организаторов"}
+        {isLoading ? (
+          <Skeleton width={"85%"} />
+        ) : (
+          "Оценка вовлеченности сотрудников"
+        )}
       </h2>
       {isLoading ? (
         <Skeleton count={5} width={"65%"} />
@@ -26,8 +32,7 @@ export default function OrganizersRating() {
                 <span className={styles.bold}>
                   {formatName(organizer.fullName)}
                 </span>{" "}
-                - {organizer.eventCount}{" "}
-                {organizer.eventCount === 1 ? "мероприятие" : "мероприятий"}
+                - {organizer.eventCount} {declineWord(organizer.eventCount)}
               </li>
             ))
           ) : (
@@ -37,4 +42,16 @@ export default function OrganizersRating() {
       )}
     </div>
   );
-}
+};
+
+export default OrganizersRating;
+
+const declineWord = (number) => {
+  const cases = [2, 0, 1, 1, 1, 2];
+  const titles = ["мероприятие", "мероприятия", "мероприятий"];
+  return titles[
+    number % 100 > 4 && number % 100 < 20
+      ? 2
+      : cases[number % 10 < 5 ? number % 10 : 5]
+  ];
+};

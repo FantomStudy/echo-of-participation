@@ -1,7 +1,8 @@
-import { fetchEventsForRate } from "@/features/eventsEvaluation/api/evenEvaluationApi";
-import { queryClient } from "@/shared/configs/queryClientConfig";
-import { useCheckAuth } from "@/shared/stores/authStore";
+import { queryClient } from "@configs/queryClientConfig";
+import { useCheckAuth } from "@stores/authStore";
 import { useQuery } from "@tanstack/react-query";
+
+import { fetchEventsForRate } from "../../api/evenEvaluationApi";
 
 export const useEventsForRate = () => {
   const isAuth = useCheckAuth();

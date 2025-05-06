@@ -1,18 +1,23 @@
-import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
+
+import { ArcElement, Chart as ChartJS, Tooltip } from "chart.js";
+
 import { chartOptions } from "../../configs/chartConfig";
+import styles from "../../styles/Chart.module.css";
 import { generateChartData } from "../../utils/chartUtils";
 
 ChartJS.register(ArcElement, Tooltip);
 
 const Chart = ({ data, error }) => {
   if (error) {
-    return <>Error</>;
+    return <>Не удалось загрузить необходимые данные...</>;
   }
 
   return (
-    <div style={{ width: "90%", height: "100%" }}>
-      <Pie data={generateChartData(data)} options={chartOptions} />
+    <div className={styles.container}>
+      <div className={styles.chartSizer}>
+        <Pie data={generateChartData(data)} options={chartOptions} />
+      </div>
     </div>
   );
 };

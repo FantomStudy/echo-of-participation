@@ -1,5 +1,5 @@
-import axios from "axios";
 import { getCookie } from "@utils/cookieUtils";
+import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const NO_AUTH_ENDPOINTS = [];
@@ -19,9 +19,9 @@ api.interceptors.request.use(
   (config) => {
     const accessToken = getCookie("access_token");
     const isNoAuth = NO_AUTH_ENDPOINTS.some((endpoint) =>
-      config.url?.includes(endpoint)
+      config.url?.includes(endpoint),
     );
-    
+
     if (accessToken && !isNoAuth) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -30,7 +30,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

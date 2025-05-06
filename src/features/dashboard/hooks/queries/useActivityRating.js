@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { useCheckAuth } from "@stores/authStore";
-import { fetchActivityRating } from "@dashboard/api/ratingsApi";
 import { useFilterStore } from "@stores/filterStore";
+import { useQuery } from "@tanstack/react-query";
+
+import { fetchActivityRating } from "../../api/ratingsApi";
 
 export const useActivityRating = () => {
   const isAuth = useCheckAuth();
@@ -11,10 +12,10 @@ export const useActivityRating = () => {
     filters.filterType === "departments"
       ? "allDepartments"
       : filters.filterType === "groupes"
-      ? `department:${filters.id}`
-      : filters.filterType === "journal"
-      ? `groupe:${filters.id}`
-      : `allGroupes`;
+        ? `department:${filters.id}`
+        : filters.filterType === "journal"
+          ? `groupe:${filters.id}`
+          : `allGroupes`;
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["activityRating", filters],

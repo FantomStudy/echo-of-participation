@@ -1,9 +1,10 @@
 import api from "@configs/axiosConfig";
+
 import {
   extractEntities,
   extractEvents,
   extractTraffic,
-} from "@dashboard/utils/extractUtils";
+} from "../utils/extractUtils";
 
 export const fetchTableData = async ({
   pageParam = 1,
@@ -17,7 +18,7 @@ export const fetchTableData = async ({
 
   if (!type) {
     response = await api.get(
-      `/event-journal/allStudents?page=${pageParam}&limit=${limit}`
+      `/event-journal/allStudents?page=${pageParam}&limit=${limit}`,
     );
   } else {
     const params = new URLSearchParams();
@@ -40,7 +41,7 @@ export const fetchTableData = async ({
 };
 
 export const saveTraffic = async (dataToSave) => {
-  const response = await api.post("/event-journal/save-journal", [dataToSave]);
+  const response = await api.post("/event-journal/save-journal", dataToSave);
 
   return response;
 };

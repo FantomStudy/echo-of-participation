@@ -1,81 +1,149 @@
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0.9375rem;
-}
-
 .profileContainer {
-  position: relative;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 40px;
 }
-
 .profileContainer h1 {
   text-align: center;
-  margin: 2.5rem 0;
   font-weight: 600;
-  font-size: clamp(1.5rem, 5vw, 1.75rem);
+  font-size: clamp(18px, 5vw, 28px);
   line-height: 100%;
-  color: #5c81ff;
+  color: var(--font-blue-color);
 }
 
-.admins_tables {
+.profileWrapper {
   display: flex;
   justify-content: space-between;
-  gap: 1.25rem;
+  grid-gap: 30px;
 }
 
-.info_wrapper {
-  border: solid 2px var(--light-border-color);
-  width: 19.6875rem;
+.entityWrapper {
+  min-width: 315px;
   height: fit-content;
-  border-radius: 0.9375rem;
-  padding: 1.5625rem 1.25rem;
+  border-radius: 15px;
+  border: solid 2px var(--light-border-color);
   display: flex;
   flex-direction: column;
-  gap: 1.875rem;
+  padding: 25px 20px;
+  grid-gap: 30px;
+  box-sizing: border-box;
 }
+/* .entityWrapper {
+  width: auto;
+} */
 
-.info_wrapper h2 {
+.entityWrapper h2 {
   font-weight: 500;
-  font-size: clamp(1.125rem, 3vw, 1.25rem);
+  font-size: clamp(18px, 3vw, 20px);
 }
 
-.tralalero {
+.entityInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: 15px;
 }
 
 .blockInfo h3 {
   font-weight: 500;
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-size: clamp(16px, 2.5vw, 18px);
 }
 
 .blockInfo p {
   font-weight: 400;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
+  font-size: clamp(14px, 2.2vw, 16px);
 }
 
-.event_table {
+.button {
+  width: auto;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  color: #fff;
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: clamp(14px, 2.2vw, 16px);
+  transition: 0.3s ease-in-out;
+}
+.button:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.button.delete {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: white;
+  background-color: var(--danger-color);
+  border: none;
+  border-radius: 8px;
+  font-size: clamp(0.625rem, 1.8vw, 0.75rem);
+}
+.button.delete:hover {
+  background-color: var(--danger-hover-color);
+}
+
+.tableBlock {
   border: solid 2px var(--light-border-color);
-  width: 62.5rem;
-  border-radius: 0.9375rem;
-  padding: 0.9375rem 1.25rem;
+  width: 100%;
+  border-radius: 15px;
+  padding: 0;
+  padding-top: 25px;
+  box-sizing: border-box;
 }
 
-.create_event {
+.tableBlockHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px var(--light-border-color);
-  padding: 0 0 0.625rem;
-  margin-bottom: 0.9375rem;
+  padding-bottom: 10px;
+  padding: 0 20px 10px;
+  margin-bottom: 15px;
 }
-
-.create_event h2 {
+.tableBlockHeader h2 {
   font-weight: 500;
-  font-size: clamp(1.125rem, 3vw, 1.25rem);
+  font-size: clamp(18px, 3vw, 20px);
 }
 
+.tableContainer {
+  overflow: auto;
+  max-height: 55vh;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+.table tbody tr:nth-child(even) {
+  background-color: var(--table-alternate-color);
+}
+
+.table td:first-child {
+  padding: 10px;
+  padding-left: 20px;
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+
+.table tbody td:last-child {
+  padding-right: 20px;
+}
+
+/* МОДАЛЬНЫЕ СТИЛИ */
+.modalContentWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+/*  
 .addEventForm {
   display: flex;
   align-items: center;
@@ -91,57 +159,8 @@
   font-size: clamp(0.875rem, 2.2vw, 1rem);
 }
 
-.add_event_btn {
-  cursor: pointer;
-  text-decoration: none;
-  background-color: var(--primary-color);
-  border: none;
-  color: #fff;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.625rem;
-  text-align: center;
-  font-weight: 500;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-  width: 14rem;
-  transition: 0.3s ease-in-out;
-}
 
-.add_event_btn:hover {
-  background-color: var(--primary-hover-color);
-}
 
-.eventsList {
-  list-style: none;
-  padding: 0;
-}
-
-.eventItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  border-bottom: 1px solid #ddd;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-}
-
-.eventItem:last-child {
-  border-bottom: none;
-}
-
-.deleteButton {
-  padding: 0.25rem 0.5rem;
-  background-color: var(--danger-color);
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  font-size: clamp(0.625rem, 1.8vw, 0.75rem);
-  width: 5rem;
-}
-
-.deleteButton:hover {
-  background-color: var(--danger-hover-color);
-}
 
 .loading {
   text-align: center;
@@ -164,13 +183,7 @@
   align-items: center;
 }
 
-.modal_content_wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.875rem;
-}
+
 
 .modal_input,
 .date_picker,
@@ -211,23 +224,21 @@
   line-height: 150%;
   text-align: center;
   color: #0069ff;
-}
+} */
 
-@media (max-width: 1024px) {
-  .container {
-    max-width: 100%;
-    padding: 0.625rem;
+/* @media (max-width: 1024px) {
+  .profileContainer {
+    max-width: none;
   }
-
   .profileContainer h1 {
     font-size: clamp(1.25rem, 4vw, 1.5rem);
   }
 
-  .admins_tables {
+  .profileWrapper {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 16px;
   }
 
   .info_wrapper {
@@ -261,9 +272,9 @@
     flex-direction: column;
     gap: 0.625rem;
   }
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
     padding: 0.5rem;
   }
@@ -310,10 +321,9 @@
   .deleteButton {
     width: 60px;
   }
-}
+} */
 
-/* Очень маленькие экраны (до 480px) */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .profileContainer h1 {
     font-size: clamp(1rem, 3.5vw, 1.25rem);
   }
@@ -334,4 +344,4 @@
   .modal_title {
     font-size: clamp(1rem, 3vw, 1.25rem);
   }
-}
+} */

@@ -1,5 +1,5 @@
-import { useDepartments } from "@dashboard/hooks/queries/useDepartments";
-import styles from "@dashboard/styles/FilterSidebar.module.css";
+import { useDepartments } from "../../hooks/queries/useDepartments";
+import styles from "../../styles/FilterSidebar.module.css";
 
 const DepartmentSelect = ({ value, handleFilterChange }) => {
   const departments = useDepartments();
@@ -12,7 +12,7 @@ const DepartmentSelect = ({ value, handleFilterChange }) => {
         const value = e.target.value;
 
         const selectedDepartment = departments.data.find(
-          (dep) => dep.id == value
+          (dep) => dep.id == value,
         );
 
         handleFilterChange({

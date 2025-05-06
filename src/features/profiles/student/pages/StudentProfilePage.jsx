@@ -126,7 +126,42 @@ const StudentProfilePage = () => {
   return (
     <>
       <div className={styles.container}>
-        <button
+        <div className={styles.info_wrapper}>
+          <h2>Информация о пользователе</h2>
+          <div className={styles.tralalero}>
+            {data ? (
+              <>
+                <div className={styles.blockInfo}>
+                  <h3>ФИО</h3>
+                  <p>{data?.fullName}</p>
+                </div>
+                <div className={styles.blockInfo}>
+                  <h3>Группа</h3>
+                  <p>{data?.groupeName}</p>
+                </div>
+                <div className={styles.blockInfo}>
+                  <h3>Отделение</h3>
+                  <p>{data?.departmentName}</p>
+                </div>
+                <div className={styles.blockInfo}>
+                  <h3>Курс</h3>
+                  <p>{data?.departmentName}</p>
+                </div>
+                <div className={styles.blockInfo}>
+                  <h3>Пол</h3>
+                  <p>{data?.departmentName}</p>
+                </div>
+                <div className={styles.blockInfo}>
+                  <h3>Дата рождения</h3>
+                  <p>{data?.dateOfBIrth}</p>
+                </div>
+              </>
+            ) : (
+              <Skeleton count={3} height={60} style={{ margin: "10px 0" }} />
+            )}
+          </div>
+        </div>
+        {/* <button
           onClick={handleBack}
           className={styles.backButton}
           title="Назад к мероприятиям"
@@ -223,7 +258,7 @@ const StudentProfilePage = () => {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
       </div>
     </>
   );

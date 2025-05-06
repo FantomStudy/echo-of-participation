@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchGroups } from "@dashboard/api/dashboardApi";
 import { useCheckAuth } from "@stores/authStore";
+import { useQuery } from "@tanstack/react-query";
+
+import { fetchGroups } from "../../api/dashboardApi";
 
 export const useGroups = () => {
   const isAuth = useCheckAuth();

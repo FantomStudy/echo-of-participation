@@ -1,11 +1,12 @@
 import Skeleton from "react-loading-skeleton";
-import ActivityRating from "../components/ActivityRating/ActivityRating.jsx";
+import "react-loading-skeleton/dist/skeleton.css";
+
+import ActivityRating from "../components/ActivityRating/ActivityRating";
 import Chart from "../components/Chart/Chart.jsx";
-import DashboardTable from "../components/DashboardTable/DashboardTable.jsx";
 import OrganizersRating from "../components/OrganizersRating/OrganizersRating.jsx";
+import Table from "../components/Table/Table.jsx";
 import { useActivityRating } from "../hooks/queries/useActivityRating.js";
 import styles from "../styles/Dashboard.module.css";
-import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Dashboard() {
   const { data, isLoading, error } = useActivityRating();
@@ -22,7 +23,7 @@ export default function Dashboard() {
           />
         ) : (
           <div className={`${styles.grid_area} ${styles.diagram}`}>
-            <Chart data={data} />
+            <Chart data={data} error={error} />
           </div>
         )}
 
@@ -35,7 +36,7 @@ export default function Dashboard() {
         </div>
 
         <div className={`${styles.grid_area} ${styles.wide}`}>
-          <DashboardTable />
+          <Table />
         </div>
       </div>
     </div>

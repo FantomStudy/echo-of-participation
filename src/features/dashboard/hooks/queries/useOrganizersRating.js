@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { fetchOrganizersRating } from "../../api/ratingsApi";
 import { useCheckAuth } from "@stores/authStore";
-import { fetchOrganizersRating } from "@dashboard/api/ratingsApi";
+import { useQuery } from "@tanstack/react-query";
 
 export const useOrganizersRating = () => {
   const isAuth = useCheckAuth();
