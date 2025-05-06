@@ -3,16 +3,15 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { format, subWeeks, subMonths } from "date-fns";
 import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
-import styles from "../styles/StudentProfilePage.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "@components/Loader/Loader";
 import { useStudent } from "../hooks/business/query/useStudent";
+import styles from "../styles/StudentProfilePage.module.css";
 
 const StudentProfilePage = () => {
   const { studentId } = useParams();
   const { data, isLoading } = useStudent(studentId);
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [sort, setSort] = useState("all");
   const [dateRange, setDateRange] = useState([null, null]);
@@ -109,9 +108,7 @@ const StudentProfilePage = () => {
     }
   };
 
-  const handleBack = () => {
-    navigate("/");
-  };
+
 
   if (isLoading) {
     return <Loader />;
@@ -124,143 +121,118 @@ const StudentProfilePage = () => {
   const filteredEvents = filterEventsBySort(data.events);
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.info_wrapper}>
-          <h2>Информация о пользователе</h2>
-          <div className={styles.tralalero}>
-            {data ? (
-              <>
-                <div className={styles.blockInfo}>
-                  <h3>ФИО</h3>
-                  <p>{data?.fullName}</p>
-                </div>
-                <div className={styles.blockInfo}>
-                  <h3>Группа</h3>
-                  <p>{data?.groupeName}</p>
-                </div>
-                <div className={styles.blockInfo}>
-                  <h3>Отделение</h3>
-                  <p>{data?.departmentName}</p>
-                </div>
-                <div className={styles.blockInfo}>
-                  <h3>Курс</h3>
-                  <p>{data?.departmentName}</p>
-                </div>
-                <div className={styles.blockInfo}>
-                  <h3>Пол</h3>
-                  <p>{data?.departmentName}</p>
-                </div>
-                <div className={styles.blockInfo}>
-                  <h3>Дата рождения</h3>
-                  <p>{data?.dateOfBIrth}</p>
-                </div>
-              </>
-            ) : (
-              <Skeleton count={3} height={60} style={{ margin: "10px 0" }} />
-            )}
+    <div className='container'>
+      <div className={styles.profileContainer}>
+        <h1>Личный кабинет студента</h1>
+
+        <div className={styles.profileWrapper}>
+          <div className={styles.entityWrapper}>
+            <h2>Информация о пользователе</h2>
+            <div className={styles.entityInfo}>
+              <div className={styles.blockInfo}>
+                <h3>ФИО</h3>
+                <p>{data?.fullName}</p>
+              </div>
+              <div className={styles.blockInfo}>
+                <h3>Группа</h3>
+                <p>{data?.groupeName}</p>
+              </div>
+              <div className={styles.blockInfo}>
+                <h3>Отделение</h3>
+                <p>{data?.departmentName}</p>
+              </div>
+              <div className={styles.blockInfo}>
+                <h3>Курс</h3>
+                <p>{data?.course}</p>
+              </div>
+              <div className={styles.blockInfo}>
+                <h3>Пол</h3>
+                <p>{data?.gender}</p>
+              </div>
+              <div className={styles.blockInfo}>
+                <h3>Дата рождения</h3>
+                <p>{data?.dateOfBIrth}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.tableBlock}>
+            <div className={styles.tableBlockHeader}>
+              <h2>Мероприятия</h2>
+              <div className={styles.filterContainer}>
+                <label>
+                  Период:
+                  <select
+                    value={sort}
+                    onChange={(e) => handleSortChange(e.target.value)}
+                    className={styles.sortSelect}
+                  >
+                    <option value="all">Все</option>
+                    <option value="week">Неделя</option>
+                    <option value="month">Месяц</option>
+                    <option value="halfYear">Полгода</option>
+                    <option value="custom">Пользовательский</option>
+                  </select>
+                </label>
+                {sort === "custom" && (
+                  <DatePicker
+                    selectsRange
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={handleDateRangeChange}
+                    dateFormat="dd.MM.yyyy"
+                    locale={ru}
+                    placeholderText="Выберите диапазон дат"
+                    className={styles.datePicker}
+                    wrapperClassName={styles.datePickerWrapper}
+                    showPopperArrow={false}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className={styles.tableContainer}>
+              {filteredEvents.length > 0 ? (
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Мероприятие</th>
+                      <th>Дата</th>
+                      <th>Баллы</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredEvents.map((event, index) => (
+                      <tr key={`event-${index}`}>
+                        <td className={styles.eventItem}>{event.name}</td>
+                        <td>{event.date}</td>
+                        <td>{event.point}</td>
+                      </tr>
+                    ))}
+                    <tr className={styles.totalRow}>
+                      <td>
+                        <strong>Итого</strong>
+                      </td>
+                      <td></td>
+                      <td>
+                        <strong>
+                          {filteredEvents.reduce(
+                            (sum, event) => sum + event.point,
+                            0
+                          )}
+                        </strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <p>Мероприятия не найдены</p>
+              )}
+            </div>
           </div>
         </div>
-        {/* <button
-          onClick={handleBack}
-          className={styles.backButton}
-          title="Назад к мероприятиям"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#333"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <div className={styles.profileHeader}>
-          <h1>{data.fullName}</h1>
-          <div className={styles.studentInfo}>
-            <p>
-              <strong>Группа:</strong> {data.groupeName}
-            </p>
-            <p>
-              <strong>Отделение:</strong> {data.departmentName}
-            </p>
-            <p>
-              <strong>Курс:</strong> {data.course}
-            </p>
-            <p>
-              <strong>Пол:</strong> {data.gender}
-            </p>
-            <p>
-              <strong>Дата рождения:</strong> {data.dateOfBIrth}
-            </p>
-          </div>
-        </div>
-
-        <div className={styles.filterContainer}>
-          <label>
-            Период:
-            <select
-              value={sort}
-              onChange={(e) => handleSortChange(e.target.value)}
-              className={styles.sortSelect}
-            >
-              <option value="all">Все</option>
-              <option value="week">Неделя</option>
-              <option value="month">Месяц</option>
-              <option value="halfYear">Полгода</option>
-              <option value="custom">Пользовательский</option>
-            </select>
-          </label>
-          {sort === "custom" && (
-            <DatePicker
-              selectsRange
-              startDate={startDate}
-              endDate={endDate}
-              onChange={handleDateRangeChange}
-              dateFormat="dd.MM.yyyy"
-              locale={ru}
-              placeholderText="Выберите диапазон дат"
-              className={styles.datePicker}
-              showPopperArrow={false}
-            />
-          )}
-        </div>
-
-        <table className={styles.eventsTable}>
-          <thead>
-            <tr>
-              <th>Мероприятие</th>
-              <th>Дата</th>
-              <th>Баллы</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEvents.map((event, index) => (
-              <tr key={`event-${index}`}>
-                <td>{event.name}</td>
-                <td>{event.date}</td>
-                <td>{event.point}</td>
-              </tr>
-            ))}
-            <tr className={styles.totalRow}>
-              <td>
-                <strong>Итого</strong>
-              </td>
-              <td></td>
-              <td>
-                <strong>
-                  {filteredEvents.reduce((sum, event) => sum + event.point, 0)}
-                </strong>
-              </td>
-            </tr>
-          </tbody>
-        </table> */}
       </div>
-    </>
+    </div>
   );
 };
 

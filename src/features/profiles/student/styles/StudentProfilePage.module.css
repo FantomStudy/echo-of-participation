@@ -1,10 +1,126 @@
-/* .container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
+
+.profileContainer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 40px;
 }
 
+.profileContainer h1 {
+  text-align: center;
+  font-weight: 600;
+  font-size: clamp(18px, 5vw, 28px);
+  line-height: 100%;
+  color: var(--font-blue-color);
+}
+
+.profileWrapper {
+  display: flex;
+  justify-content: space-between;
+  grid-gap: 30px;
+}
+
+.entityWrapper {
+  min-width: 315px;
+  height: fit-content;
+  border-radius: 15px;
+  border: solid 2px var(--light-border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  grid-gap: 30px;
+  box-sizing: border-box;
+}
+
+.entityWrapper h2 {
+  font-weight: 500;
+  font-size: clamp(18px, 3vw, 20px);
+}
+
+.entityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.blockInfo h3 {
+  font-weight: 500;
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+
+.blockInfo p {
+  font-weight: 400;
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+
+.tableBlock {
+  border: solid 2px var(--light-border-color);
+  width: 100%;
+  border-radius: 15px;
+  padding: 0;
+  padding-top: 25px;
+  box-sizing: border-box;
+}
+
+.tableBlockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px var(--light-border-color);
+  padding: 0 20px 10px;
+  margin-bottom: 15px;
+}
+
+.tableBlockHeader h2 {
+  font-weight: 500;
+  font-size: clamp(18px, 3vw, 20px);
+}
+
+.tableContainer {
+  overflow: auto;
+  max-height: 55vh;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+}
+
+.table th {
+  padding: 10px;
+  font-weight: 500;
+  font-size: clamp(14px, 2.2vw, 16px);
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.table td {
+  padding: 10px;
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+
+.table td:first-child {
+  padding-left: 20px;
+}
+
+.table td:last-child {
+  padding-right: 20px;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--table-alternate-color);
+}
+
+.totalRow {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+/* Кнопка "Назад" */
 .backButton {
   position: absolute;
   top: 10px;
@@ -31,51 +147,33 @@
   height: 16px;
 }
 
-.profileHeader {
-  margin: 30px 0;
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.profileHeader h1 {
-  margin-bottom: 10px;
-  color: #333;
+.sortSelect {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f1f2f6;
+  cursor: pointer;
 }
 
-.studentInfo p {
-  margin: 5px 0;
-  color: #666;
-}
-
-.eventsTable {
+.datePicker {
+  padding: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f1f2f6;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  box-sizing: border-box;
 }
 
-.eventsTable th,
-.eventsTable td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.eventsTable th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-}
-
-.eventsTable tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.totalRow {
-  font-weight: bold;
-  background-color: #f0f0f0;
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  font-size: 18px;
+.datePickerWrapper {
+  width: 200px;
 }
 
 .noData {
@@ -83,29 +181,6 @@
   padding: 20px;
   font-size: 18px;
   color: #666;
-}
-
-.filterContainer {
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.sortSelect {
-  margin-left: 10px;
-  padding: 5px;
-  font-size: 14px;
-  border-radius: 4px;
-}
-
-.datePicker {
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 200px;
-  text-align: center;
 }
 
 .react-datepicker {
@@ -127,4 +202,4 @@
 
 .react-datepicker__day--in-selecting-range {
   background-color: #cce5ff;
-} */
+}
