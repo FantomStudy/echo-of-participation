@@ -36,6 +36,9 @@ const StudentProfilePage = () => {
     const [day, month, year] = dateStr.split(".");
     return new Date(`${year}-${month}-${day}`);
   };
+  const removeDateFromEventName = (eventName) => {
+    return eventName.replace(/\s*\d{2}\.\d{2}\.\d{4}$/, "").trim();
+  };
 
   const filterEventsBySort = (events) => {
     const now = new Date();
@@ -204,7 +207,9 @@ const StudentProfilePage = () => {
                   <tbody>
                     {filteredEvents.map((event, index) => (
                       <tr key={`event-${index}`}>
-                        <td className={styles.eventItem}>{event.name}</td>
+                        <td className={styles.eventItem}>
+                          {removeDateFromEventName(event.name)}
+                        </td>
                         <td>{event.date}</td>
                         <td>{event.point}</td>
                       </tr>

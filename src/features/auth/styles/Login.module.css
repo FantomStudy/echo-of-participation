@@ -1,9 +1,36 @@
 .pageContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #f0f2f5;
+}
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+
+  position: absolute;
+  top: 50px;
+}
+.logoContainer img {
+  width: 80px;
+  height: auto;
+}
+.mainLogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mainLogo p {
+  font-size: 16px;
+  font-weight: 500;
+}
+.mainLogo img {
+  width: 50px;
 }
 .formContainer {
   width: 100%;

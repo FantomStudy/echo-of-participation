@@ -67,7 +67,7 @@ const UserProfile = () => {
                       <tr key={event.id}>
                         <td>{event.eventName}</td>
                         <td>{formatDate(event.eventDate)}</td>
-                        <td>{event.total}</td>
+                        <td>{event.total.toFixed(1)}</td>
                         <td>{event.participantsCount}</td>
                       </tr>
                     ))}

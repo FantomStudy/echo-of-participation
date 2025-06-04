@@ -1,40 +1,38 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { queryClient } from "@configs/queryClientConfig";
+
 import Dropdown from "@components/Dropdown/Dropdown";
+import { queryClient } from "@configs/queryClientConfig";
+import { useSetAuth } from "@stores/authStore";
 import { removeCookie } from "@utils/cookieUtils";
 import { formatName } from "@utils/formatUtils";
-import { useSetAuth } from "@stores/authStore";
+
 import styles from "./Header.module.css";
-import { useEffect, useState } from "react";
 
 const Header = () => {
   const userData = queryClient.getQueryData(["currentUser"]);
-  const location = useLocation();
 
   return (
     <header className={styles.header}>
       <div className="container">
         <div className={styles.header_wrapper}>
-          <Link to="/" className={styles.logo_section}>
-            <img src="/logo.svg" alt="logo" />
-            <h1>Эхо участия</h1>
-          </Link>
-          <div className={styles.nav_section}>
-            <ul>
-              <li className={location.pathname === "/" ? styles.active : null}>
-                <Link to="/">Основная таблица</Link>
-              </li>
-              <li
-                className={
-                  location.pathname === "/event-evaluation"
-                    ? styles.active
-                    : null
-                }
-              >
-                <Link to="/event-evaluation">Оценка мероприятия</Link>
-              </li>
-            </ul>
+          <div style={{ display: "flex", gridGap: 30 }}>
+            <img
+              src="/public/okei-logo.svg"
+              alt="okei-logo"
+              className={styles.optional}
+            />
+            <img
+              src="/public/profi-logo.svg"
+              alt="prof-logo"
+              className={styles.optional}
+            />
+            <Link to="/" className={styles.logo_section}>
+              <img src="/logo.svg" alt="logo" />
+              <h1 className="">Эхо участия</h1>
+            </Link>
           </div>
+
           <div className={styles.user_section}>
             <img src="/bell.svg" alt="bell" className={styles.bell} />
 
@@ -69,8 +67,6 @@ export default Header;
 function DropdownItems() {
   const userData = queryClient.getQueryData(["currentUser"]);
   const setAuth = useSetAuth();
-  const { width } = useWindowSize();
-  const isMobile = width < 870;
 
   const handleLogout = () => {
     removeCookie("access_token");
@@ -85,38 +81,15 @@ function DropdownItems() {
           <Link to="/admin">Панель администратора</Link>
         </li>
       )}
-      {isMobile && (
-        <>
-          <li>
-            <Link to="/">Основная таблица</Link>
-          </li>
-          <li>
-            <Link to="/event-evaluation">Оценка мероприятия</Link>
-          </li>
-        </>
-      )}
+      <li>
+        <Link to="/">Основная таблица</Link>
+      </li>
+      <li>
+        <Link to="/event-evaluation">Оценка мероприятия</Link>
+      </li>
       <li onClick={handleLogout} className={styles.logout}>
         Выйти
       </li>
     </>
   );
-}
-
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowSize;
 }

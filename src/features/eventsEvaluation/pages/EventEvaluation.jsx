@@ -57,7 +57,7 @@ const EventEvaluation = () => {
                       placeholder={`0-${maxRating}`}
                     />
                   </td>
-                  <td>{event.all}</td>
+                  <td>{event.all.toFixed(1)}</td>
                   <td>{event.count}</td>
                 </tr>
               ))}
