@@ -1,0 +1,51 @@
+.header {
+  border: 1px solid var(--border-color);
+}
+.header a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+.headerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+}
+.logotypes {
+  display: flex;
+  gap: 30px;
+}
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logoLink h1 {
+  font-weight: 500;
+  font-size: 22px;
+}
+.logoLink img {
+  width: 65px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.bell {
+  width: 40px;
+  height: 40px;
+}
+.userData {
+  text-align: right;
+}
+.userData h2 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.userData p {
+  font-size: 16px;
+  color: var(--text-secondary-color);
+  line-height: 100%;
+}
