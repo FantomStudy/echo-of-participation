@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/_header/")({
-  component: RouteComponent,
-});
+import { DashboardPage } from "@/modules/dashboard";
 
-function RouteComponent() {
-  return <div>Hello "/login"!</div>;
-}
+export const Route = createFileRoute("/_authenticated/_header/")({
+  component: DashboardPage,
+});

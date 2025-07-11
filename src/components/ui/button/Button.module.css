@@ -15,7 +15,7 @@
   background-color: var(--primary-color);
 
   &:hover {
-    background-color: var(--hover-primary-color);
+    background-color: var(--primary-color-hover);
   }
 }
 .danger {
@@ -23,6 +23,6 @@
   background-color: var(--danger-color);
 
   &:hover {
-    background-color: var(--hover-danger-color);
+    background-color: var(--danger-color-hover);
   }
 }

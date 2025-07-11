@@ -1,0 +1,17 @@
+.gridLayout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  /* box-sizing: border-box; */
+}
+.gridLayout > div {
+  min-height: 415px;
+  padding: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 16px !important;
+  box-sizing: border-box;
+}
+
+.gridLayout > div:last-child {
+  grid-column: 1 / -1;
+}

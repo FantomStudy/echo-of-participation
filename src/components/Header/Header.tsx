@@ -1,13 +1,22 @@
-import { Link } from "@tanstack/react-router";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { formatName } from "@/utils/format";
 
-import Dropdown from "../ui/dropdown/Dropdown";
 import styles from "./Header.module.css";
 
 export const Header = () => {
   const currentUser = useAuthContext();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict`; // TODO ПЕРЕРАБОТАТЬ ФУНКЦИЮ ВЫХОДА, РЕАЛИЗОВАТЬ НА BACKEND
+    queryClient.removeQueries({ queryKey: ["currentUser"] });
+    navigate({ to: "/login", replace: true });
+  };
 
   return (
     <header className={styles.header}>
@@ -33,15 +42,48 @@ export const Header = () => {
           <div className={styles.controls}>
             <img src="/icons/bell.svg" alt="bell" className={styles.bell} />
 
-            <Dropdown>
-              {currentUser && (
-                <div className={styles.userData}>
-                  <h2>{formatName(currentUser.fullName)}</h2>
-                  <p>{currentUser.roleName}</p>
-                </div>
-              )}
-              <img src="/icons/user.svg" alt="userIcon" />
-            </Dropdown>
+            <Menu>
+              <MenuButton className={styles.dropdownTrigger}>
+                {currentUser && (
+                  <div className={styles.triggerData}>
+                    <h2>{formatName(currentUser.fullName)}</h2>
+                    <p>{currentUser.roleName}</p>
+                  </div>
+                )}
+                <img src="/icons/user.svg" alt="userIcon" />
+              </MenuButton>
+              <MenuItems
+                transition
+                anchor="bottom end"
+                className={styles.dropdownItems}
+              >
+                <MenuItem>
+                  {currentUser.roleName === "Администратор" && (
+                    <Link to="/" className={styles.dropdownItem}>
+                      Панель администратора
+                    </Link>
+                  )}
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/" className={styles.dropdownItem}>
+                    Основная таблица
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/" className={styles.dropdownItem}>
+                    Оценка мероприятия
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    onClick={handleLogout}
+                    className={styles.dropdownItem}
+                  >
+                    Выйти
+                  </button>
+                </MenuItem>
+              </MenuItems>
+            </Menu>
           </div>
         </div>
       </div>

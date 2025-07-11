@@ -11,14 +11,18 @@
 
   --bg-color: #f0f2f5;
   --bg-element-color: #fff;
+  --bg-element-color-hover: #f1f2f6;
 
   --border-color: #f4f4f4;
 
   --primary-color: #0069ff;
-  --hover-primary-color: #005cdd;
+  --primary-color-hover: #005cdd;
 
   --danger-color: #ff0000;
-  --hover-danger-color: #e60000;
+  --danger-color-hover: #e60000;
+
+  --bg-skeleton: #dddddd;
+  --bg-skeleton-shine: #f0f0f0b6;
 
   --lite-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 

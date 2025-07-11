@@ -1,5 +1,6 @@
 .header {
-  border: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
 }
 .header a {
   color: var(--text-color);
@@ -37,15 +38,60 @@
   width: 40px;
   height: 40px;
 }
-.userData {
+
+.dropdownItems:focus,
+.dropdownTrigger:focus {
+  outline: none;
+}
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+.triggerData {
   text-align: right;
 }
-.userData h2 {
+.triggerData h2 {
   font-size: 18px;
   font-weight: 500;
 }
-.userData p {
+.triggerData p {
   font-size: 16px;
   color: var(--text-secondary-color);
   line-height: 100%;
+}
+.dropdownItems {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-element-color);
+  box-shadow: var(--lite-shadow);
+  margin-top: 5px;
+  transition:
+    0.1s ease-out scale,
+    0.1s ease-out opacity;
+}
+.dropdownItems[data-closed] {
+  opacity: 0;
+  scale: 0.95;
+}
+.dropdownItem {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: left;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  color: var(--text-color);
+  background-color: transparent;
+  transition: background-color 0.25s ease-in-out;
+  &:hover {
+    background-color: var(--bg-element-color-hover);
+  }
 }
